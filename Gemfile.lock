@@ -181,7 +181,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4, >= 6.1.4.1)
-  sass-rails (>= 6)
+  sass-rails (>= 6.0)
   spring
   tzinfo-data
   web-console (>= 4.1.0)
