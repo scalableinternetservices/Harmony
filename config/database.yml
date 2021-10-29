@@ -1,4 +1,4 @@
-# PostgreSQL. Versions 9.3 and up are supported.
+# PostgreSQL. Versions 9.3 and up are s:qupported.
 #
 # Install the pg driver:
 #   gem install pg
@@ -15,7 +15,7 @@
 # gem 'pg'
 #
 default: &default
-  host: <%= ENV.fetch("PGHOST") {"db"} %>
+  host: <%= ENV.fetch("PGHOST") { "db" } %>
   password: postgres
   username: postgres
   adapter: postgresql
@@ -84,6 +84,10 @@ test:
 #
 production:
   <<: *default
-  database: app_production
-  username: app
-  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  host: <%= ENV['RDS_HOSTNAME']%>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  port: <%= ENV['RDS_PORT'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  #  username: app
+  #  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
