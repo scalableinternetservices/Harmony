@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  root "application#ent"
   get 'message/post'
   get 'message/show'=>'message#show'
   post 'message/post'=>'message#create'
@@ -9,6 +8,7 @@ Rails.application.routes.draw do
   # get "/channels/:id", to: "channels#show"
   # get "/channels/new", to: "channels#new"
   # post "/channels", to: "channels#create"
-
+  root "channels#index"
+  resources :users
   resources :channels
 end

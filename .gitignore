@@ -34,3 +34,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# emacs autosave and recovery files
+*~
+#~
