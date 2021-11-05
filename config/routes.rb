@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # get "/channels/:id", to: "channels#show"
   # get "/channels/new", to: "channels#new"
   # post "/channels", to: "channels#create"
-
+  root "messages#index"
+  
   resources :channels
 end
