@@ -10,4 +10,10 @@ class MessageControllerTest < ActionDispatch::IntegrationTest
     get message_post_url
     assert_response :success
   end
+
+  test "should get show" do
+    get message_show_url
+    assert_response :success
+  end
+
 end

@@ -11,6 +11,7 @@ class MessageController < ApplicationController
     @message = Message.new
   end
   def show
+    @messages = Message.all
   end
   private
 
