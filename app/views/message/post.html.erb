@@ -1,0 +1,7 @@
+<h1>Message#post</h1>
+<div class="messageBar">
+	<%= form_for :message do |f| %>
+    <%= f.text_field :content %>
+    <%= f.submit "Send message", class: "btn btn-primary" %>
+	<% end %>
+</div>
