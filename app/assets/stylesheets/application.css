@@ -13,10 +13,13 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
 body{
     text-align: center;
-    background-color: lightblue;
     align-items: center;
+    padding: 0;
+    border: 0;
 }
 footer{
     position: fixed;

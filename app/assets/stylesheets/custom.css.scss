@@ -1,0 +1,12 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+.navbar {
+    margin: 0;
+    border: 0;
+}
+#user_pic{
+	border-radius: 50%;
+	width: 5%;
+  	height: 5%;
+  	float:left;
+}

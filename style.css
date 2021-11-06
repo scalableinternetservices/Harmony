@@ -1,0 +1,906 @@
+/* Discord_Light */
+#n1_2 {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: rgb(227, 229, 232);
+}
+ 
+	/* div.chat */
+	#n1_3 {
+		width: 1576px;
+		height: 900px;
+		overflow: hidden;
+		background: rgb(255, 255, 255);
+	}
+ 
+		/* div.container */
+		#n1_4 {
+			width: 1544px;
+			height: 44px;
+			overflow: hidden;
+			left: 16px;
+			top: 836px;
+		}
+ 
+			/* div.container */
+			#n1_5 {
+				width: 1499px;
+				height: 44px;
+				overflow: hidden;
+				background: rgb(235, 237, 239);
+				left: 45px;
+			}
+ 
+				/* Slightly smiling face */
+				#n1_6 {
+					width: 22px;
+					height: 22px;
+					overflow: visible;
+					left: 1462px;
+					top: 11px;
+				}
+ 
+					/* Vector */
+					#n1_8 {
+						inset: 63.89% 29.1665% 22.22% 29.1659%;
+					}
+ 
+					/* Vector */
+					#n1_9 {
+						inset: 27.78% 59.7223% 52.78% 26.3888%;
+					}
+ 
+					/* Vector */
+					#n1_10 {
+						inset: 27.78% 26.3888% 52.78% 59.7223%;
+					}
+ 
+				/* svg.icon */
+				#n1_11 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 1423px;
+					top: 10px;
+				}
+ 
+					/* Vector */
+					#n1_12 {
+						top: 8.33%;
+						bottom: 8.33%;
+					}
+ 
+				/* svg.icon */
+				#n1_13 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 1384px;
+					top: 10px;
+				}
+ 
+					/* Vector */
+					#n1_14 {
+						inset: 8.45% 8.33333% 8.34%;
+					}
+ 
+				/* Message #general */
+				#n1_15 {
+					font-family: "Helvetica Neue";
+					font-size: 16px;
+					font-weight: 400;
+					letter-spacing: 0px;
+					color: rgb(116, 127, 141);
+					vertical-align: middle;
+					justify-content: flex-start;
+					transform: translate(0px, 0px);
+					line-height: 18.75px;
+					height: 19px;
+					left: 0.933956%;
+					right: 9.40627%;
+					top: 12px;
+				}
+ 
+			/* div.icon */
+			#n1_16 {
+				width: 44px;
+				height: 44px;
+				overflow: hidden;
+				background: rgb(235, 237, 239);
+			}
+ 
+				/* svg.icon */
+				#n1_17 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 10px;
+					top: 10px;
+				}
+ 
+					/* Vector */
+					#n1_18 {
+						inset: 8.33% 8.33333%;
+					}
+ 
+		/* Empty message */
+		#n1_19 {
+			background-image: url("https://s3-alpha-sig.figma.com/img/0a42/f0f5/25f72856ee9d0a07b7dda9953fdae752?Expires=1636329600&Signature=dckhMgy-wtRoyUnVOuqj~vEWbeXgpJ9AY6OyvecZwH3m3t5LDr3ndn08ULJHHV7S2rfdCLNMZylvzXF4OXn3BEh3JlT~FeGXzg9Wa-m7cU1hRbs2c0QQvYwrIxhBxEaLBUvZux-S4EpS-3sccibAIhICn6LfvdFAUPSc7fAw8k1bwLQM3pSTmoDUf8IyuL167gMhe35QWxezS-6QVOjt7S8oi1UaSnp~Y5cdKKtMGamTtXvjBQ2Y~fHZzPo3EC~zbiJ~nXIy-pIkAXJDOgHvb-J2PCu3y8T-XPkPEEoI5WNgm6zso7HMnP3ciwWTwSaX~-zfF1PWANJh69gTx-DYxA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			left: 16px;
+			width: 1540px;
+			top: 652.431px;
+			height: 167.569px;
+		}
+ 
+		/* div.bar */
+		#n1_20 {
+			width: 1576px;
+			top: 49px;
+			height: 0.000152588px;
+		}
+ 
+		/* div.title.container */
+		#n1_21 {
+			width: 1560px;
+			height: 48px;
+			overflow: hidden;
+			left: 8px;
+		}
+ 
+			/* div.toolbar */
+			#n1_22 {
+				width: 360px;
+				height: 24px;
+				overflow: hidden;
+				left: 1200px;
+				top: 12px;
+			}
+ 
+				/* svg.icon */
+				#n1_23 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 324px;
+				}
+ 
+					/* Path */
+					#n1_24 {
+						right: 2px;
+						width: 20px;
+						top: 2px;
+						height: 20px;
+					}
+ 
+				/* svg.icon */
+				#n1_25 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 286px;
+				}
+ 
+					/* Path */
+					#n1_26 {
+						right: 2px;
+						width: 20px;
+						top: 2px;
+						height: 20px;
+					}
+ 
+				/* div.searchBar */
+				#n1_27 {
+					width: 144px;
+					height: 24px;
+					overflow: hidden;
+					background: rgb(227, 229, 232);
+					right: 88px;
+				}
+ 
+					/* svg.icon */
+					#n1_28 {
+						width: 18px;
+						height: 18px;
+						overflow: hidden;
+						right: 6px;
+						top: 3px;
+					}
+ 
+						/* Path */
+						#n1_29 {
+							right: 2px;
+							width: 14px;
+							top: 2px;
+							height: 14px;
+						}
+ 
+					/* Search */
+					#n1_30 {
+						font-family: "Helvetica Neue";
+						font-size: 12px;
+						font-weight: 500;
+						letter-spacing: 0px;
+						color: rgb(116, 127, 141);
+						vertical-align: middle;
+						justify-content: flex-start;
+						width: 39px;
+						transform: translate(0px, 0px);
+						line-height: 14.0625px;
+						height: 15px;
+						left: 6px;
+						top: 4px;
+					}
+ 
+				/* svg.icon */
+				#n1_31 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 90px;
+				}
+ 
+					/* Path */
+					#n1_32 {
+						inset: 16.69% 25% 16.64% 8.33333%;
+					}
+ 
+					/* Path */
+					#n1_33 {
+						inset: 16.69% 25% 16.64% 8.33333%;
+					}
+ 
+					/* Path */
+					#n1_34 {
+						inset: 56.4% 8.33282% 16.64% 73.0054%;
+					}
+ 
+					/* Path */
+					#n1_35 {
+						inset: 16.82% 24.9997% 50.38% 60.4045%;
+					}
+ 
+				/* svg.icon */
+				#n1_36 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 52px;
+				}
+ 
+					/* Path */
+					#n1_37 {
+						inset: 8.75% 8.33333% 11.7% 12.1165%;
+					}
+ 
+				/* svg.icon */
+				#n1_38 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 14px;
+				}
+ 
+					/* Path */
+					#n1_39 {
+						inset: 12.5%;
+					}
+ 
+			/* div.children */
+			#n1_40 {
+				width: 1190px;
+				height: 24px;
+				overflow: hidden;
+				top: 12px;
+			}
+ 
+				/* svg.icon */
+				#n1_41 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 14px;
+				}
+ 
+					/* Path */
+					#n1_42 {
+						inset: 12.5% 9.729% 12.5% 8.72904%;
+					}
+ 
+				/* h3.title */
+				#n1_43 {
+					width: 58px;
+					height: 20px;
+					overflow: hidden;
+					left: 44px;
+					top: 2px;
+				}
+ 
+					/* general */
+					#n1_44 {
+						font-family: "Helvetica Neue";
+						font-size: 16px;
+						font-weight: 700;
+						letter-spacing: 0px;
+						color: rgb(6, 6, 7);
+						vertical-align: middle;
+						justify-content: flex-start;
+						width: 58px;
+						transform: translate(0px, 0px);
+						line-height: 18.75px;
+						height: 20px;
+					}
+ 
+	/* div.sidebar */
+	#n1_45 {
+		width: 272px;
+		height: 900px;
+		overflow: hidden;
+		background: rgb(242, 243, 245);
+		left: 72px;
+	}
+ 
+		/* div.scroller */
+		#n1_46 {
+			width: 272px;
+			height: 851px;
+			overflow: hidden;
+			background: rgb(242, 243, 245);
+			top: 49px;
+		}
+ 
+			/* div.panels */
+			#n1_47 {
+				width: 272px;
+				height: 52px;
+				overflow: hidden;
+				background: rgb(235, 237, 239);
+				top: 799px;
+			}
+ 
+				/* svg.icon */
+				#n1_48 {
+					width: 20px;
+					height: 20px;
+					overflow: hidden;
+					left: 238px;
+					top: 16px;
+				}
+ 
+					/* Vector */
+					#n1_49 {
+						inset: 8.33% 8.33313% 8.33% 8.33344%;
+					}
+ 
+				/* svg.icon */
+				#n1_50 {
+					width: 20px;
+					height: 20px;
+					overflow: hidden;
+					left: 208px;
+					top: 16px;
+				}
+ 
+					/* Vector */
+					#n1_51 {
+						inset: 8.35% 8.33344% 8.32% 8.33313%;
+					}
+ 
+				/* svg.icon */
+				#n1_52 {
+					width: 20px;
+					height: 20px;
+					overflow: hidden;
+					left: 178px;
+					top: 16px;
+				}
+ 
+					/* Vector */
+					#n1_53 {
+						inset: 8.33% 20.8331% 12.5% 20.8334%;
+					}
+ 
+					/* Vector */
+					#n1_54 {
+						inset: 8.33% 20.8331% 8.33% 20.8334%;
+					}
+ 
+				/* div.avatar */
+				#n1_55 {
+					width: 32px;
+					height: 32px;
+					overflow: hidden;
+					left: 20px;
+					top: 10px;
+				}
+ 
+					/* avatar */
+					#n1_56 {
+						width: 32px;
+						height: 32px;
+						overflow: hidden;
+					}
+ 
+						/* div.avatar */
+						#n1_57 {
+							width: 32px;
+							height: 32px;
+						}
+ 
+						/* Avatar */
+						#n1_58 {
+							background-image: url("https://s3-alpha-sig.figma.com/img/5a46/105d/ca2e416ecedc7b4130219cf2a004ffb7?Expires=1636329600&Signature=U~6MQWZG7ZqcY5~Jrd6Urh9fk1n6ROLp5SYF7ZyV~AhPF8wcptKHC04dIJvZ-yJAkeO5uw1Om7pD9QIaCtclCZRzRLiGdxoBZPGwZ6yoN66D9408n~oeR2QVL04dskgz6pAiugYRIqGcSo-b9iQHe2Zw2tkMr6gnBEgof9COGHwP4iPSgdkKvwjbXghAqJQyq8YOrCLZ~VFWkgNi~a1Wi3d-D8dI6WPBH4wzPNFnPIQ7zqpw13pOxbXCIAtJgdnuvQ1UIxJK4~izhQcSVZRQBMe4ALf~5PviRjwuDFVA9-a~CYeesDBF2ABPmToVDUVGUaMnoPoHwO~zig-kVO5qyw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+							background-size: cover;
+							background-repeat: no-repeat;
+							background-position: center center;
+							width: 32px;
+							height: 32px;
+						}
+ 
+					/* rect.pointer */
+					#n1_59 {
+						width: 10px;
+						height: 10px;
+						left: 22px;
+						top: 22px;
+					}
+ 
+				/* spencercamp */
+				#n1_60 {
+					font-family: "Helvetica Neue";
+					font-size: 14px;
+					font-weight: 500;
+					letter-spacing: 0px;
+					color: rgb(0, 0, 0);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 89px;
+					transform: translate(0px, 0px);
+					line-height: 16.4062px;
+					height: 17px;
+					left: 65px;
+					top: 10px;
+				}
+ 
+				/* #6709 */
+				#n1_61 {
+					font-family: "Helvetica Neue";
+					font-size: 12px;
+					font-weight: 300;
+					letter-spacing: 0px;
+					color: rgb(0, 0, 0);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 34px;
+					transform: translate(0px, 0px);
+					line-height: 14.0625px;
+					height: 15px;
+					left: 65px;
+					top: 27px;
+				}
+ 
+			/* div.content */
+			#n1_62 {
+				width: 252px;
+				height: 34px;
+				overflow: hidden;
+				left: 10px;
+				top: 160px;
+			}
+ 
+				/* svg.actionIcon */
+				#n1_63 {
+					width: 16px;
+					height: 16px;
+					overflow: hidden;
+					left: 230px;
+					top: 9px;
+				}
+ 
+					/* Path */
+					#n1_64 {
+						inset: 12.5%;
+					}
+ 
+				/* svg.icon */
+				#n1_65 {
+					width: 16px;
+					height: 16px;
+					overflow: hidden;
+					left: 210px;
+					top: 9px;
+				}
+ 
+					/* Path */
+					#n1_66 {
+						left: 68.75%;
+						bottom: 68.75%;
+					}
+ 
+					/* Path */
+					#n1_67 {
+						inset: 18.79% 43.75% 49.96% 25%;
+					}
+ 
+					/* Path */
+					#n1_68 {
+						inset: 52.12% 25% 18.71% 6.25%;
+					}
+ 
+				/* General */
+				#n1_69 {
+					font-family: "Helvetica Neue";
+					font-size: 16px;
+					font-weight: 500;
+					letter-spacing: 0px;
+					color: rgb(116, 127, 141);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 58px;
+					transform: translate(0px, 0px);
+					line-height: 18.75px;
+					height: 20px;
+					left: 34px;
+					top: 7px;
+				}
+ 
+				/* Frame */
+				#n1_70 {
+					overflow: hidden;
+					inset: 14.71% 88.0952% 14.71% 2.38095%;
+				}
+ 
+					/* Vector */
+					#n1_71 {
+						inset: 12.51% 12.5% 12.49% 8.33333%;
+					}
+ 
+			/* div.container */
+			#n1_72 {
+				width: 272px;
+				height: 40px;
+				overflow: hidden;
+				top: 120px;
+			}
+ 
+				/* svg.icon */
+				#n1_73 {
+					width: 18px;
+					height: 18px;
+					overflow: hidden;
+					left: 239px;
+					top: 11px;
+				}
+ 
+					/* Path */
+					#n1_74 {
+						inset: 16.67% 16.6667%;
+					}
+ 
+				/* Voice CHANNELS */
+				#n1_75 {
+					font-family: "Helvetica Neue";
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 0px;
+					color: rgb(106, 116, 128);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 190px;
+					transform: translate(0px, 0px);
+					line-height: 14.0625px;
+					height: 16px;
+					left: 26px;
+					top: 12px;
+				}
+ 
+				/* svg.icon */
+				#n1_76 {
+					width: 12px;
+					height: 12px;
+					overflow: hidden;
+					left: 8px;
+					top: 14px;
+				}
+ 
+					/* Path */
+					#n1_77 {
+						inset: 33.33% 25% 35.83%;
+					}
+ 
+			/* div.content */
+			#n1_78 {
+				width: 252px;
+				height: 34px;
+				overflow: hidden;
+				background: rgb(211, 215, 219);
+				left: 10px;
+				top: 56px;
+			}
+ 
+				/* svg.actionIcon */
+				#n1_79 {
+					width: 16px;
+					height: 16px;
+					overflow: hidden;
+					left: 230px;
+					top: 9px;
+				}
+ 
+					/* Path */
+					#n1_80 {
+						inset: 12.5%;
+					}
+ 
+				/* svg.icon */
+				#n1_81 {
+					width: 16px;
+					height: 16px;
+					overflow: hidden;
+					left: 210px;
+					top: 9px;
+				}
+ 
+					/* Path */
+					#n1_82 {
+						left: 68.75%;
+						bottom: 68.75%;
+					}
+ 
+					/* Path */
+					#n1_83 {
+						inset: 18.79% 43.75% 49.96% 25%;
+					}
+ 
+					/* Path */
+					#n1_84 {
+						inset: 52.12% 25% 18.71% 6.25%;
+					}
+ 
+				/* general */
+				#n1_85 {
+					font-family: "Helvetica Neue";
+					font-size: 16px;
+					font-weight: 500;
+					letter-spacing: 0px;
+					color: rgb(6, 6, 7);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 55px;
+					transform: translate(0px, 0px);
+					line-height: 18.75px;
+					height: 20px;
+					left: 34px;
+					top: 7px;
+				}
+ 
+				/* svg.icon */
+				#n1_86 {
+					width: 24px;
+					height: 24px;
+					overflow: hidden;
+					left: 6px;
+					top: 5px;
+				}
+ 
+					/* Path */
+					#n1_87 {
+						inset: 12.5% 9.729% 12.5% 8.72904%;
+					}
+ 
+			/* div.container */
+			#n1_88 {
+				width: 272px;
+				height: 40px;
+				overflow: hidden;
+				top: 16px;
+			}
+ 
+				/* svg.icon */
+				#n1_89 {
+					width: 18px;
+					height: 18px;
+					overflow: hidden;
+					left: 239px;
+					top: 11px;
+				}
+ 
+					/* Path */
+					#n1_90 {
+						inset: 16.67% 16.6667%;
+					}
+ 
+				/* TEXT CHANNELS */
+				#n1_91 {
+					font-family: "Helvetica Neue";
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 0px;
+					color: rgb(106, 116, 128);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 190px;
+					transform: translate(0px, 0px);
+					line-height: 14.0625px;
+					height: 16px;
+					left: 26px;
+					top: 12px;
+				}
+ 
+				/* svg.icon */
+				#n1_92 {
+					width: 12px;
+					height: 12px;
+					overflow: hidden;
+					left: 8px;
+					top: 14px;
+				}
+ 
+					/* Path */
+					#n1_93 {
+						inset: 33.33% 25% 35.83%;
+					}
+ 
+		/* div.bar */
+		#n1_94 {
+			width: 272px;
+			top: 49.0001px;
+			height: 3.05176e-05px;
+		}
+ 
+		/* header.header */
+		#n1_95 {
+			width: 240px;
+			height: 48px;
+			overflow: hidden;
+			left: 16px;
+		}
+ 
+			/* svg.button */
+			#n1_96 {
+				width: 18px;
+				height: 18px;
+				overflow: hidden;
+				left: 222px;
+				top: 15px;
+			}
+ 
+				/* path */
+				#n1_97 {
+					left: 3.5px;
+					width: 11px;
+					top: 4.5px;
+					height: 6.5px;
+				}
+ 
+			/* h1.name */
+			#n1_100 {
+				width: 186px;
+				height: 20px;
+				overflow: hidden;
+				top: 14px;
+			}
+ 
+				/* Guild */
+				#n1_101 {
+					font-family: "Helvetica Neue";
+					font-size: 16px;
+					font-weight: 700;
+					letter-spacing: 0px;
+					color: rgb(6, 6, 7);
+					vertical-align: middle;
+					justify-content: flex-start;
+					width: 40px;
+					transform: translate(0px, 0px);
+					line-height: 18.75px;
+					height: 20px;
+				}
+ 
+	/* nav.wrapper */
+	#n1_102 {
+		width: 72px;
+		height: 900px;
+		overflow: hidden;
+		background: rgb(227, 229, 232);
+	}
+ 
+		/* div.listItem */
+		#n1_103 {
+			width: 72px;
+			height: 48px;
+			overflow: hidden;
+			top: 154px;
+		}
+ 
+			/* childWrapper */
+			#n1_104 {
+				width: 48px;
+				height: 48px;
+				left: 12px;
+			}
+ 
+			/* svg */
+			#n1_105 {
+				width: 24px;
+				height: 24px;
+				overflow: hidden;
+				left: 24px;
+				top: 12px;
+			}
+ 
+				/* Path */
+				#n1_106 {
+					inset: 11.11% 11.1109% 11.11% 11.1112%;
+				}
+ 
+		/* div.listItem */
+		#n1_107 {
+			width: 72px;
+			height: 48px;
+			overflow: hidden;
+			top: 98px;
+		}
+ 
+			/* childWrapper */
+			#n1_108 {
+				width: 48px;
+				height: 48px;
+				left: 12px;
+			}
+ 
+			/* svg.circleIcon */
+			#n1_109 {
+				width: 24px;
+				height: 24px;
+				overflow: hidden;
+				left: 24px;
+				top: 12px;
+			}
+ 
+				/* svg.circleIcon */
+				#n1_110 {
+					inset: 12.5%;
+				}
+ 
+		/* div.listItem */
+		#n1_111 {
+			width: 72px;
+			height: 2px;
+			overflow: hidden;
+			top: 88px;
+		}
+ 
+			/* div.guildSeparator */
+			#n1_112 {
+				left: 20px;
+				width: 32px;
+				top: 2px;
+				height: 0px;
+			}
+ 
+		/* div.listItem */
+		#n1_113 {
+			width: 72px;
+			height: 48px;
+			overflow: hidden;
+			top: 32px;
+		}
+ 
+			/* childWrapper */
+			#n1_114 {
+				width: 48px;
+				height: 48px;
+				left: 12px;
+			}
+ 
+			/* svg.homeIcon */
+			#n1_115 {
+				width: 28px;
+				height: 20px;
+				overflow: hidden;
+				left: 22px;
+				top: 14px;
+			}

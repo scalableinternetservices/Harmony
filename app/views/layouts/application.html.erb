@@ -8,8 +8,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-    </header>
+    <%= render partial: 'shared/navigation_bar' %>
     <div class="container">
       <%= yield %>
     </div>
