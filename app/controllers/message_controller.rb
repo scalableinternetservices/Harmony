@@ -3,15 +3,19 @@ class MessageController < ApplicationController
     @message = Message.new
   end
   def create
-    @message = Message.new(message_params)
+    #logger.debug "123456"
+
+    @channel = Channel.find_by(id:params[:channel_id])
+    @message = @channel.messages.build(message_params)
+    @message.user_id=1
     @message.save
-    redirect_to "/"
+    redirect_to channel_path(@channel)
   end
   def new
     @message = Message.new
   end
   def show
-    @messages = Message.all
+    @channel = Channel.find_by(id:params[:id])
   end
   private
 

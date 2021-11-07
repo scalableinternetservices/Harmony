@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-	def ent
-		redirect_to "/message/show"
-	end
+	logger = Logger.new(STDOUT)
+	logger.level = Logger::WARN
 end

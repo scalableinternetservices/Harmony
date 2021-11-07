@@ -1,3 +1,7 @@
 <h1><%= @channel.name %></h1>
 <%= link_to "back to channels", "/channels/"%>
+<%= @channel.messages.each.size.inspect%>
+<% @channel.messages.each do |message|%>
+<%= message.content%>
+<% end %>
 <%=render template: "message/show"%>

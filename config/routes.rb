@@ -10,5 +10,8 @@ Rails.application.routes.draw do
   # post "/channels", to: "channels#create"
   root "channels#index"
   resources :users
-  resources :channels
+  resources :channels do
+    post 'messages'=>'message#create'
+    get 'messages'=>'message#create'
+  end
 end
