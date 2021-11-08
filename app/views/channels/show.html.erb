@@ -2,6 +2,10 @@
 <%= link_to "back to channels", "/channels/"%>
 <%= @channel.messages.each.size.inspect%>
 <% @channel.messages.each do |message|%>
-<%= message.content%>
+    <div>
+        <%= message.content%><br/>
+    </div>
 <% end %>
 <%=render template: "message/show"%>
+
+<%= render_async channel_path(@channel),interval: 2000%>

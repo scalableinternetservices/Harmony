@@ -11,6 +11,7 @@
     <%= render partial: 'shared/navigation_bar' %>
     <div class="container">
       <%= yield %>
+      <%= content_for :render_async %>
     </div>
   </body>
     <footer>
