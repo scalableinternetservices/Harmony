@@ -1,11 +1,10 @@
 <h1><%= @channel.name %></h1>
 <%= link_to "back to channels", "/channels/"%>
-<%= @channel.messages.each.size.inspect%>
-<% @channel.messages.each do |message|%>
-    <div>
-        <%= message.content%><br/>
-    </div>
-<% end %>
-<%=render template: "message/show"%>
+<%= render template: "message/show" %>
 
-<%= render_async channel_path(@channel), interval: 5000%>
+<%# 
+causes two copies of channel
+interval causes a reload too quickly when sent to 5000, 5 seconds
+second copy does rendering while first copy does not
+%>
+<%= render_async channel_path(@channel), interval: 10000 %>
