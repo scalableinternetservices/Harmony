@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do  
   get 'message/post'
   get 'message/show'=>'message#show'
   post 'message/post'=>'message#create'
@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   root "channels#index"
   resources :users
   resources :channels
+  resources :sessions
 end
