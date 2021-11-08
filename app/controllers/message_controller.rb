@@ -8,8 +8,10 @@ class MessageController < ApplicationController
     @channel = Channel.find_by(id:params[:channel_id])
     @message = @channel.messages.build(message_params)
     @message.user_id=1
-    @message.save
-    redirect_to channel_path(@channel)
+
+    if @message.save
+      redirect_to channel_path(@channel)
+    end
   end
   def new
     @message = Message.new
