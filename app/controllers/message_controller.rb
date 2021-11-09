@@ -1,4 +1,6 @@
 class MessageController < ApplicationController
+  skip_before_action :require_login, only: [:create, :new, :show]
+
   def post
     @message = Message.new
   end

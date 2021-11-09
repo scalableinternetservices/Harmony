@@ -1,7 +1,6 @@
 <h1><%= @channel.name %></h1>
 <%= link_to "back to channels", "/channels/"%>
 <div>
-    <%= request.original_url %>
     <%=render template: "message/show"%>
     <div class="messageBar">
         <% if @channel then%>
@@ -11,4 +10,12 @@
         <% end %>
         <% end %>
     </div>
+  <h1>user list</h1>
+  <div class="show-user-list">
+    <% @users.each do |user| %>
+      <div class="user">
+        <%= user.username%>
+      </div>
+    <% end %>
+  </div>
 </div>

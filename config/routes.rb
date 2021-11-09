@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do  
   get 'message/post'
   get 'message/show'=>'message#show'
   post 'message/post'=>'message#create'
@@ -14,4 +14,5 @@ Rails.application.routes.draw do
     post 'messages'=>'message#create'
     get 'messages'=>'message#show'
   end
+  resources :sessions
 end

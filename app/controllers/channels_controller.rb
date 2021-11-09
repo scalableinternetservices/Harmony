@@ -1,10 +1,13 @@
 class ChannelsController < ApplicationController
+  skip_before_action :require_login, only: [:create, :new, :show, :index]
+  
   def index
     @channels = Channel.all
   end
 
   def show
     @channel = Channel.find(params[:id])
+    @users = User.all
   end
 
   def new
