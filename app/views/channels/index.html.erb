@@ -3,8 +3,7 @@
   <% @channels.each do |channel| %>
     <li>
       Channel:
-      <%= link_to channel.name, channel %>
-       
+      <%= link_to channel.name, channel %>   
       <%= channel.messages.size.inspect%>
       messages
     </li>

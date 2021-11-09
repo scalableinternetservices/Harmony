@@ -4,7 +4,11 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @channel = Channel.find_by(id:params[:id])
+    if params.has_key?(:id) then
+      @channel = Channel.find_by(id:params[:id])
+    else
+      @channel = Channel.find_by(id:params[:channel_id])
+    end
   end
 
   def create
@@ -22,7 +26,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
     def message_params
       params.require(:message).permit(:content)
     end
