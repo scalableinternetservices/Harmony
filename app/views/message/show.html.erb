@@ -3,9 +3,10 @@
         <%= params.inspect %>
         <% if @channel then%>
             <% @channel.messages.each do |message| %>
-            <div class="message">
-                <%= message.content%>
-            </div>
+                <%= form_with model: message do |f| %>
+                    <%= f.text_field :content %>
+                    <%= f.submit "Edit", class: "btn btn-primary"%>
+                <% end %>
             <% end %>
         <% end%>
     </div>

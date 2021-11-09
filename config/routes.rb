@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'message/show'=>'message#show'
   post 'message/post'=>'message#create'
   post 'message/show'=>'message#create'
+  post 'message/:id' => 'message#update'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # get "/channels", to: "channels#index"
   # get "/channels/:id", to: "channels#show"
@@ -14,4 +15,5 @@ Rails.application.routes.draw do
     post 'messages'=>'message#create'
     get 'messages'=>'message#show'
   end
+  resources :message
 end
