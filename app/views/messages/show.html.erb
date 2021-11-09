@@ -9,11 +9,4 @@
             <% end %>
         <% end %>
     </div>
-
-    <div class="messageBar">
-        <%= form_with model: [@channel,@channel.messages.build] do |f| %>
-        <%= f.text_field :content %>
-        <%= f.submit "Send message", class: "btn btn-primary"%>
-        <% end %>
-    </div>
 </div>
