@@ -1,0 +1,12 @@
+<div class="Messaging">
+    <div class="showMessage">
+        <% if @channel.messages then%>
+            <% @channel.messages.each do |message| %>
+            <div class="message">
+                <b><%= message.user_id%>:</b>
+                <%= message.content%><br/>
+            </div>
+            <% end %>
+        <% end %>
+    </div>
+</div>

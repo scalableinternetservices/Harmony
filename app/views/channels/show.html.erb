@@ -5,3 +5,11 @@
 <%= message.content%>
 <% end %>
 <%=render template: "message/show"%>
+<h1>user list</h1>
+<div class="show-user-list">
+  <% @users.each do |user| %>
+    <div class="user">
+      <%= user.username%>
+    </div>
+  <% end %>
+</div>
