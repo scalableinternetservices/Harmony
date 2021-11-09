@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   resources :users
   resources :channels do
     post 'messages'=>'message#create'
-    get 'messages'=>'message#create'
+    get 'messages'=>'message#show'
   end
 end

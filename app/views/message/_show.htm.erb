@@ -9,5 +9,6 @@
             <% end %>
         <% end%>
     </div>
+    <%= render_async get_messages_url(params), interval: 5000%>  
 </div>
 <%= content_for :render_async %>

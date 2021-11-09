@@ -15,7 +15,11 @@ class MessageController < ApplicationController
     @message = Message.new
   end
   def show
-    @channel = Channel.find_by(id:params[:id])
+    if params.has_key?(:id) then
+      @channel = Channel.find_by(id:params[:id])
+    else
+      @channel = Channel.find_by(id:params[:channel_id])
+    end
   end
   private
 
