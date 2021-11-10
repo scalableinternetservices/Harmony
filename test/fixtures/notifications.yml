@@ -3,7 +3,11 @@
 one:
   recipient_id: 1
   actor_id: 1
+<<<<<<< HEAD
   read_at: 2021-11-10 23:26:11
+=======
+  read_at: 2021-11-10 19:33:37
+>>>>>>> 97356d5d018d90b4b017880414f29e879eefdb5c
   action: MyString
   notifiable_id: 1
   notifiable_type: MyString
@@ -11,7 +15,11 @@ one:
 two:
   recipient_id: 1
   actor_id: 1
+<<<<<<< HEAD
   read_at: 2021-11-10 23:26:11
+=======
+  read_at: 2021-11-10 19:33:37
+>>>>>>> 97356d5d018d90b4b017880414f29e879eefdb5c
   action: MyString
   notifiable_id: 1
   notifiable_type: MyString

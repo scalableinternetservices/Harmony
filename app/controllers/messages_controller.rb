@@ -16,8 +16,9 @@ class MessagesController < ApplicationController
     @channel = Channel.find_by(id:params[:channel_id])
     @message = @channel.messages.build(message_params)
     @message.user_id=1
+    @current_user = User.find_by(id:@message.user_id)#change when athenication is needed to send a message
 
-    @current_user = User.find_by(id:@message.user_id) #change when athenication is needed to send a message
+    # Create notifications
     (@channel.users.uniq - @current_user).each do |user|
       Notification.create(recipient: user, actor: @current_user, action: "posted", notifiable: @message)
     end
