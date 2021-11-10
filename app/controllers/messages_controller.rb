@@ -17,6 +17,11 @@ class MessagesController < ApplicationController
     @message = @channel.messages.build(message_params)
     @message.user_id=1
 
+    @current_user = User.find_by(id:@message.user_id) #change when athenication is needed to send a message
+    (@channel.users.uniq - @current_user).each do |user|
+      Notification.create(recipient: user, actor: @current_user, action: "posted", notifiable: @message)
+    end
+
     if @message.save
       redirect_to channel_path(@channel)
     end
