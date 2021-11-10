@@ -8,3 +8,9 @@ import * as ActiveStorage from "@rails/activestorage"
 
 Rails.start()
 ActiveStorage.start()
+
+
+
+
+
+

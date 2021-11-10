@@ -1,6 +1,12 @@
 <h1><%= @channel.name %></h1>
 <%= link_to "back to channels", "/channels/"%>
-<%=render template: "message/show"%>
+<%= render template: "messages/show" %>
+<div class="messageBar">
+        <%= form_with model: [@channel,@channel.messages.build] do |f| %>
+        <%= f.text_field :content %>
+        <%= f.submit "Send message", class: "btn btn-primary"%>
+   <% end %>
+</div>
 <h1>user list</h1>
 <div class="show-user-list">
   <% @users.each do |user| %>
@@ -9,3 +15,4 @@
     </div>
   <% end %>
 </div>
+<! render_async channel_path(@channel), interval: 10000 >
