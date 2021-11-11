@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_213157) do
+ActiveRecord::Schema.define(version: 2021_11_09_045849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 2021_11_08_213157) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "channel_id"
     t.bigint "user_id"
+    t.bigint "parent_message_id"
     t.index ["channel_id"], name: "index_messages_on_channel_id"
+    t.index ["parent_message_id"], name: "index_messages_on_parent_message_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
@@ -46,5 +48,6 @@ ActiveRecord::Schema.define(version: 2021_11_08_213157) do
   end
 
   add_foreign_key "messages", "channels"
+  add_foreign_key "messages", "messages", column: "parent_message_id"
   add_foreign_key "messages", "users"
 end
