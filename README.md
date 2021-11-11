@@ -12,6 +12,8 @@ docker-compose run web rails db:migrate
 docker-compose up
 ```
 
+If you have merge conflicts in `db/schema.rb`, follow [this](https://stackoverflow.com/questions/7614215/managing-conflict-in-schema-rb-created-by-git-operation) stackoverflow post.
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
