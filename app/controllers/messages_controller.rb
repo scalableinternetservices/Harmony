@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
+  # before_action :require_login
   skip_before_action :require_login, only: [:create, :new, :show]
+
   def new
     @message = Channel.find_by(id:params[:id]).build
   end
@@ -7,6 +9,7 @@ class MessagesController < ApplicationController
   def show
     if params.has_key?(:id) then
       @channel = Channel.find_by(id:params[:id])
+      render 'app/views/notifications/index.json.jbuilder'
     else
       @channel = Channel.find_by(id:params[:channel_id])
     end
@@ -15,13 +18,14 @@ class MessagesController < ApplicationController
   def create
     @channel = Channel.find_by(id:params[:channel_id])
     @message = @channel.messages.build(message_params)
-    @message.user_id=1
-    @current_user = User.find_by(id:@message.user_id)#change when athenication is needed to send a message
+    #want to change user_id to username
+    @message.user_id=current_user.id
 
     # Create notifications
-    # can add (@channel.users - @current_user).each so the user posting doesnt get the notification
-    @channel.users.each do |user|
-      Notification.create(recipient: user, actor: @current_user, action: "posted", notifiable: @message)
+    # can add some sort of (@channel.users.uniq - current_user).each so the user posting doesnt get the notification
+    # currently getting error can't convert User to Array when i try tho
+    @channel.users.uniq.each do |user|
+      Notification.create(recipient: user, actor: current_user, action: "posted", notifiable: @channel)
     end
 
     if @message.save
