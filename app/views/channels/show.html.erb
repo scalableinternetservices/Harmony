@@ -1,6 +1,12 @@
 <h1><%= @channel.name %></h1>
 <%= link_to "back to channels", "/"%>
-<%= render template: "messages/show" %>
+
+<! render template: "messages/show" >
+
+<%= render_async message_path, interval: 5000 %>
+
+<%= content_for :render_async %>
+
 <div class="messageBar">
         <%= form_with model: [@channel,@channel.messages.build] do |f| %>
         <%= f.text_field :content %>

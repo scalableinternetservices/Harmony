@@ -1,9 +1,15 @@
 class ChannelsController < ApplicationController
   skip_before_action :require_login, only: [:create, :new, :show, :index]
 
+  # @num_hash = {}
+  # for i in Channel.all
+  #     @num_hash[i] = i.messages.all.size
+  # end
+  # puts @num_hash
+
   def channel_refresh
     @channels = Channel.all
-  
+    # @num = Channel.messages.all.size
     render partial: "channel_refresh"
   end
 

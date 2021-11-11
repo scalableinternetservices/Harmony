@@ -7,6 +7,14 @@
       <%= channel.messages.size.inspect%>
       messages
     </li>
+    <!-- The following code doesn't work
+    <% if @num_hash then%>
+        <h1>@num_hash</h1>
+        <% if channel.messages.size.inspect != @num_hash[channel] then%>
+            <h1>new</h1>
+        <% end %>
+    <% end %>
+    -->
   <% end %>
 </ul>
 </div>
