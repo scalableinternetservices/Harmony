@@ -1,5 +1,5 @@
 <h1><%= @channel.name %></h1>
-<%= link_to "back to channels", "/channels/"%>
+<%= link_to "back to channels", "/"%>
 <%= render template: "messages/show" %>
 <div class="messageBar">
         <%= form_with model: [@channel,@channel.messages.build] do |f| %>

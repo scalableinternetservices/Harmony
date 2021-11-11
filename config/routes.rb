@@ -11,4 +11,7 @@ Rails.application.routes.draw do
     resources :messages
   end
   resources :sessions
+
+  get :channel_refresh, controller: :channels
+
 end

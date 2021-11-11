@@ -1,6 +1,12 @@
 class ChannelsController < ApplicationController
   skip_before_action :require_login, only: [:create, :new, :show, :index]
+
+  def channel_refresh
+    @channels = Channel.all
   
+    render partial: "channel_refresh"
+  end
+
   def index
     @channels = Channel.all
   end
@@ -23,6 +29,7 @@ class ChannelsController < ApplicationController
       render :new
     end
   end
+
   private
     def channel_params
       params.require(:channel).permit(:name)
