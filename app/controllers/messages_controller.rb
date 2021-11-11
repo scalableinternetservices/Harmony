@@ -19,6 +19,7 @@ class MessagesController < ApplicationController
     @current_user = User.find_by(id:@message.user_id)#change when athenication is needed to send a message
 
     # Create notifications
+    # can add (@channel.users - @current_user).each so the user posting doesnt get the notification
     @channel.users.each do |user|
       Notification.create(recipient: user, actor: @current_user, action: "posted", notifiable: @message)
     end
