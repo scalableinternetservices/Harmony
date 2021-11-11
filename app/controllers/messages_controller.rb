@@ -3,7 +3,14 @@ class MessagesController < ApplicationController
   def new
     @message = Channel.find_by(id:params[:id]).build
   end
-
+  def update
+    @message = Message.find_by(id: params[:id])
+    if @message.update(message_params)
+      redirect_to channel_path(@message.channel), notice: 'Message was successfully updated.'
+    else
+      render :edit
+    end
+  end
   def show
     if params.has_key?(:id) then
       @channel = Channel.find_by(id:params[:id])
