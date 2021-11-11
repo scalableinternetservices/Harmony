@@ -48,8 +48,8 @@
                             <%= f.submit "Edit", class: "btn btn-primary"%>
                         <% end %>
 		    </div>
+		    <button type="button" class="btn btn-primary" onclick='add_child_form(<%= message.id %>, <%= @channel.id %>, "<%= form_authenticity_token %>")'>Reply</button>
 		<% end %>
-		<div class="btn btn-primary" onclick='add_child_form(<%= message.id %>, <%= @channel.id %>, "<%= form_authenticity_token %>")'>Reply</div>
 		<div id=<%= message.id %> style="color:blue">
                     <% message.replies.each do |reply| %>
 		        <div>Reply:</div>
