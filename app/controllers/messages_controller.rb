@@ -22,8 +22,11 @@ class MessagesController < ApplicationController
   def create
     @channel = Channel.find_by(id:params[:channel_id])
     @message = @channel.messages.build(message_params)
-    @message.user_id=1
-
+    if(session[:user_id])
+      @message.user_id = session[:user_id]
+    else
+      @message.user_id=1 #by default there is a guest account in user which id=1
+    end
     if @message.save
       redirect_to channel_path(@channel)
     end
