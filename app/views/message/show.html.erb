@@ -1,12 +1,62 @@
+<script type="text/javascript">
+  function add_child_form(elt_id, channel_id, form_auth_token) {
+      var curr_div = document.getElementById(elt_id);
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", `/channels/${channel_id}/messages`);
+      form.setAttribute("accept-charset", "UTF-8");
+
+      var auth = document.createElement("input");
+      auth.setAttribute("type", "hidden");
+      auth.setAttribute("name", "authenticity_token");
+      auth.setAttribute("value", form_auth_token);
+
+      var parent_id = document.createElement("input");
+      parent_id.setAttribute("type", "hidden");
+      parent_id.setAttribute("name", "message[parent_message_id]");
+      parent_id.setAttribute("value", elt_id);
+
+      var content = document.createElement("input");
+      content.setAttribute("type", "text");
+      content.setAttribute("name", "message[content]");
+      auth.setAttribute("id", 'message_content');
+
+      var submit = document.createElement("input");
+      submit.setAttribute("type", "submit");
+      submit.setAttribute("name", "commit");
+      submit.setAttribute("value", "Send message");
+      submit.setAttribute("class", "btn btn-primary");
+      submit.setAttribute("data-disable-with", "Send message");
+
+      form.appendChild(auth);
+      form.appendChild(content);
+      form.appendChild(submit);
+      form.appendChild(parent_id);
+
+      curr_div.appendChild(form);
+  }
+</script>
 <div class="Messaging">
     <div class="showMessage">
         <%= params.inspect %>
         <% if @channel then%>
             <% @channel.messages.each do |message| %>
-                <%= form_with model: message do |f| %>
-                    <%= f.text_field :content %>
-                    <%= f.submit "Edit", class: "btn btn-primary"%>
-                <% end %>
+	        <% if message.parent_message_id == nil %>
+                    <%= form_with model: message do |f| %>
+                        <%= f.text_field :content %>
+                        <%= f.submit "Edit", class: "btn btn-primary"%>
+                    <% end %>
+		<% end %>
+		<div class="btn btn-primary" onclick='add_child_form(<%= message.id %>, <%= @channel.id %>, "<%= form_authenticity_token %>")'>Reply</div>
+		<div id=<%= message.id %> style="color:blue">
+                    <% message.replies.each do |reply| %>
+		        <div>Reply:</div>
+		        <%= form_with model: reply do |f| %>
+                            <%= f.text_field :content %>
+                            <%= f.submit "Edit", class: "btn btn-primary"%>
+                        <% end %>
+		    <% end %>
+	        </div>
             <% end %>
         <% end%>
     </div>
