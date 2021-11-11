@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_secure_password
+  
   has_many :messages, dependent: :destroy
   validates :username, presence: true
   validates :firstname, presence: true

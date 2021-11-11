@@ -38,14 +38,16 @@
 </script>
 <div class="Messaging">
     <div class="showMessage">
-        <%= params.inspect %>
-        <% if @channel then%>
+        <% if @channel.messages then%>
             <% @channel.messages.each do |message| %>
 	        <% if message.parent_message_id == nil %>
-                    <%= form_with model: message do |f| %>
-                        <%= f.text_field :content %>
-                        <%= f.submit "Edit", class: "btn btn-primary"%>
-                    <% end %>
+		    <div class="message">
+		        <b><%= message.user_id%>:</b>
+                        <%= form_with model: message do |f| %>
+                            <%= f.text_field :content %>
+                            <%= f.submit "Edit", class: "btn btn-primary"%>
+                        <% end %>
+		    </div>
 		<% end %>
 		<div class="btn btn-primary" onclick='add_child_form(<%= message.id %>, <%= @channel.id %>, "<%= form_authenticity_token %>")'>Reply</div>
 		<div id=<%= message.id %> style="color:blue">
@@ -58,7 +60,6 @@
 		    <% end %>
 	        </div>
             <% end %>
-        <% end%>
+        <% end %>
     </div>
 </div>
-<%= content_for :render_async %>

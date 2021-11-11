@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2021_11_09_045849) do
     t.string "location"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
+    t.string "string"
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

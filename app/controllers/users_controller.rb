@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :require_login, only: [:new, :create, :show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -22,9 +23,10 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
+    @user = User.create(user_params)
 
-    if @user.save
+    if @user.valid?
+      session[:user_id] = @user.id
       redirect_to @user, notice: 'User was successfully created.'
     else
       render :new
@@ -54,7 +56,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :firstname, :lastname, :age, :gender, :location)
+      params.require(:user).permit(:username, :password, :firstname, :lastname, :age, :gender, :location)
       # params.fetch(:user, {})
     end
 end
