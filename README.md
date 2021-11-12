@@ -16,6 +16,8 @@ If you have merge conflicts in `db/schema.rb`, follow [this](https://stackoverfl
 
 If the db is in a bad state, to create a fresh database, follow [this link](https://stackoverflow.com/a/4116124/7263373)
 
+By default in User table, id=1 is guest 
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_09_045849) do
+ActiveRecord::Schema.define(version: 2021_11_11_193346) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,8 +53,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_045849) do
     t.string "string"
     t.index ["username"], name: "index_users_on_username", unique: true
   end
-end
-ActiveRecord::Schema.define(version: 2021_11_11_193346) do
+
   add_foreign_key "employees", "employees", column: "parent_message_id"
   add_foreign_key "messages", "channels"
   add_foreign_key "messages", "messages", column: "parent_message_id"
