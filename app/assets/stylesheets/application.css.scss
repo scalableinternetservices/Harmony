@@ -10,11 +10,13 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
 
-body{
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+ @import "font-awesome";
+ 
+/* body{
     text-align: center;
     align-items: center;
     padding: 0;
@@ -28,4 +30,5 @@ footer{
     right: 0px;
     margin-bottom: 0px;
     text-align: center;
-}
+} */
+
