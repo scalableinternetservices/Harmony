@@ -5,7 +5,6 @@
 
 //= require_tree 
 //= require_self
-//= require jquery
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
@@ -13,7 +12,6 @@
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 
-require("jquery")
 Rails.start()
 ActiveStorage.start()
 
