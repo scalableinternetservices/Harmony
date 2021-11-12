@@ -22,7 +22,7 @@ class MessagesController < ApplicationController
     @message.user_id=current_user.id
 
     # Create notifications
-    # can add some sort of (@channel.users.uniq - current_user).each so the user posting doesnt get the notification
+    # can add some sort of (@forum_thread.users.uniq - [current_user]).each do |user| so the user posting doesnt get the notification
     # currently getting error can't convert User to Array when i try tho
     @channel.users.uniq.each do |user|
       Notification.create(recipient: user, actor: current_user, action: "posted", notifiable: @channel)
