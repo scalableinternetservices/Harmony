@@ -1,12 +1,29 @@
 <h1><%= @channel.name %></h1>
+<%= render_async channel_path(@channel), interval: 10000 %>
 <%= link_to "back to channels", "/"%>
-<%= render template: "messages/show" %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    console.log("IN script")
+    $('document').ready(startInterval)
+    function startInterval(){
+      console.log("IN start")
+      setInterval(getMessages, 5000);
+    }
+
+    function getMessages(){
+      console.log("IN getMessages")
+      $("[data-behavior='message-items']").html("<%= j (render template: "messages/show") %>")
+      
+    }
+</script>
+<div data-behavior="message-items"></div>
 <div class="messageBar">
-        <%= form_with model: [@channel,@channel.messages.build] do |f| %>
-        <%= f.text_field :content %>
-        <%= f.submit "Send message", class: "btn btn-primary"%>
-   <% end %>
+  <%= form_with model: [@channel,@channel.messages.build] do |f| %>
+    <%= f.text_field :content %>
+    <%= f.submit "Send message", class: "btn btn-primary"%>
+  <% end %>
 </div>
+
 <h1>user list</h1>
 <div class="show-user-list">
   <% @users.each do |user| %>
@@ -18,4 +35,3 @@
     </div>
   <% end %>
 </div>
-<! render_async channel_path(@channel), interval: 10000 >
