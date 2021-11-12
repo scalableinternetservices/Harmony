@@ -1,6 +1,31 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+<script>
+    console.log("IN script")
+    $('document').ready(startInterval)
+    function startInterval(){
+      console.log("IN start")
+      setInterval(getNewNotifications, 5000);
+    }
+
+    function getNewNotifications(){
+      // $('document').ajax(
+      //   url: "/notifications.json",
+      //   dataType: "JSON",
+      //   method: "GET",
+      //   success: handleSuccess
+      // )
+      console.log("IN start")
+    }
+
+    function handleSuccess(data){
+      console.log(data)
+    }
+
+
+</script>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -27,7 +52,7 @@
       </form> %>
       <% if current_user.present? %>
         <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item btn-group" data-behavior="notifications">
+          <li class="nav-item btn-group" data-behavior="notifications" >
            <a class="dropdown-toggle nav-link" type="button" data-behavior="notifications-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <%= fa_icon "bell" %> 
              <span data-behavior="unread-count"></span>
