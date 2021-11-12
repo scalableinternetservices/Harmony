@@ -11,16 +11,15 @@
 
   <tbody>
     <% @users.each do |user| %>
+      <% if user.username == "guest" %>
+        <% next %>
+      <% end %>
       <tr>
         <td><%= user.username%></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View Profile', user %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New User', new_user_path %>

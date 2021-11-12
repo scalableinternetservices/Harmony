@@ -42,7 +42,7 @@
             <% @channel.messages.each do |message| %>
 	        <% if message.parent_message_id == nil %>
 		    <div class="message">
-		        <b><%= message.user_id%>:</b>
+		        <b><%= User.find(message.user_id).username %>:</b>
                         <%= form_with model: message do |f| %>
                             <%= f.text_field :content %>
                             <%= f.submit "Edit", class: "btn btn-primary"%>
@@ -52,7 +52,7 @@
 		<% end %>
 		<div id=<%= message.id %> style="color:blue">
                     <% message.replies.each do |reply| %>
-		        <div>Reply:</div>
+		        <div><%= User.find(message.user_id).username %>(reply):</div>
 		        <%= form_with model: reply do |f| %>
                             <%= f.text_field :content %>
                             <%= f.submit "Edit", class: "btn btn-primary"%>

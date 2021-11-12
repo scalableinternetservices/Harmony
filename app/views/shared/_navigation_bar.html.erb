@@ -1,4 +1,15 @@
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href="/">Harmony</a>
-  <a class="navbar-brand" href="/users#index">all users</a>
+  <div style="width:200px;float:left;display:inline-block">&nbsp;</div>
+  <div style="width:500px;float:center;display:inline-block">
+    <a class="navbar-brand" href="/">Harmony</a>
+    <a class="navbar-brand" href="/users#index">all users</a>
+  </div>
+  <div style="width:200px;float:right;display:inline-block">
+    <% if session.include? :user_id %>
+      <div style="float:right">Logged in as: <a class="navbar-brand" href="/users/<%= session[:user_id] %>"><%= User.find(session[:user_id]).username %></a>
+      </div>
+    <% else %>
+      <a class="navbar-brand" href="/sessions/new" style="float:right">Login</a>
+    <% end %>
+  </div>
 </nav>

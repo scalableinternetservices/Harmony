@@ -1,5 +1,5 @@
 class ChannelsController < ApplicationController
-  skip_before_action :require_login, only: [:create, :new, :show, :index]
+  skip_before_action :require_login, only: [:show, :index]
   
   def index
     @channels = Channel.all
