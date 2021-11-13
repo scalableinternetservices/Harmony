@@ -1,0 +1,37 @@
+/*var messageContainer= $("#messageContainer");
+	<% if @channel.messages then%>
+		<% @channel.messages.each do |message| %>
+			var messageField = $('<div/>').attr({
+					class: 'message'
+			});
+			<% if message.parent_message_id == nil then%>
+	            messageField.append("<b><%= message.user_id%>:</b>");
+	            <%= form_with model: message do |f| %>
+	                <%= f.text_field :content %>
+	                <%= f.submit "Edit", class: "btn btn-primary"%>
+	            <% end %>
+	            var replyButton = $('<input/>').attr({
+	            	type: "button",
+	            	id: "field",
+	            	value: "Reply",
+	            });
+	            replyButton.onclick = add_child_form(<%= message.id %>, <%= @channel.id %>, "<%= form_authenticity_token %>")
+	            messageField.append(replyButton)
+	        <% end %>
+	        var replyField = $('<div/>').attr({
+	        	id: <%=message.id%>,
+	        	style: "color:blue"
+	        })
+	        <% message.replies.each do |reply| %>
+	        	replyField.append("<div>Reply:</div>")
+	            <%= form_with model: reply do |f| %>
+	                <%= f.text_field :content %>
+	                <%= f.submit "Edit", class: "btn btn-primary"%>
+	            <% end %>
+	        <% end %>
+	   	messageContainer.appendChild(messageField)
+	   	messageContainer.appendChild(replyField)
+	    <% end %>
+    <% end %>
+	console.log(abc)
+	console.log("rend")*/

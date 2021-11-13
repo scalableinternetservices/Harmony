@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
   skip_before_action :require_login, only: [:create, :new, :show]
+  layout false
+
   def new
     @message = Channel.find_by(id:params[:id]).build
   end
@@ -12,10 +14,10 @@ class MessagesController < ApplicationController
     end
   end
   def show
-    if params.has_key?(:id) then
-      @channel = Channel.find_by(id:params[:id])
-    else
+    if params.has_key?(:channel_id) then
       @channel = Channel.find_by(id:params[:channel_id])
+    else
+      @channel = Channel.find_by(id:params[:id])
     end
   end
 
@@ -34,6 +36,10 @@ class MessagesController < ApplicationController
 
   def index
     redirect_to '/channels'
+  end
+
+  def ajaxRender
+    format.html { render :action=>"show"} 
   end
 
   private
