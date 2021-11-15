@@ -40,3 +40,15 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+### Steps for a clean docker deployment
+* `docker-compose down --rmi all -v --remove-orphans`
+* In case you have issues with permissions, run the command: `sudo chown -R $USER:$USER tmp && sudo chmod -R u=rwx,g=rwx,o=rx tmp/db`
+* `docker-compose build web`
+* `docker-compose up --detach db`
+* `docker-compose run web rails db:create`
+* If an error about `RAILS_ENV` not being set in schema pops up, run: `docker-compose run web rails db:environment:set RAILS_ENV=development `
+* `docker-compose run web bundle install`
+* `docker-compose run web yarn install`
+* `docker-compose up`
+* Delete cookies for `localhost:3000` in your web and refresh!
