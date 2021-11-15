@@ -1,32 +1,47 @@
 class MessagesController < ApplicationController
-  # before_action :require_login
   skip_before_action :require_login, only: [:create, :new, :show]
+  layout false
 
   def new
     @message = Channel.find_by(id:params[:id]).build
   end
+  
+  def update
+    @message = Message.find_by(id: params[:id])
+    if @message.update(message_params)
+      redirect_to channel_path(@message.channel), notice: 'Message was successfully updated.'
+    else
+      render :edit
+    end
+  end
 
   def show
-    if params.has_key?(:id) then
-      @channel = Channel.find_by(id:params[:id])
-      render 'app/views/notifications/index.json.jbuilder'
-    else
+    if params.has_key?(:channel_id) then
       @channel = Channel.find_by(id:params[:channel_id])
+    else
+      @channel = Channel.find_by(id:params[:id])
     end
   end
 
   def create
     @channel = Channel.find_by(id:params[:channel_id])
     @message = @channel.messages.build(message_params)
-    #want to change user_id to username
-    @message.user_id=current_user.id
-
-    # Create notifications
-    # can add some sort of (@forum_thread.users.uniq - [current_user]).each do |user| so the user posting doesnt get the notification
-    # currently getting error can't convert User to Array when i try tho
-    @channel.users.uniq.each do |user|
-      Notification.create(recipient: user, actor: current_user, action: "posted", notifiable: @channel)
+    if(session[:user_id])
+      @message.user_id = session[:user_id]
+      # Create notifications
+      # can add some sort of (@channel.users.uniq - [current_user]).each do |user| so the user posting doesnt get the notification
+      (@channel.users.uniq - [current_user]).each  do |user|
+        Notification.create(recipient: user, actor: current_user, action: "posted", notifiable: @channel)
+      end
+    else
+      @message.user_id=1 #by default there is a guest account in user which id=1
     end
+
+    # add notification for reply 
+    # if(@message.parent_message != Nil)
+    #   @parrent_user = User.find_by(id: @message.parent_message.id)
+    #   Notification.create(recipient: @parrent_user, actor: current_user, action: "replied", notifiable: @channel)
+    # end
 
     if @message.save
       redirect_to channel_path(@channel)
@@ -35,6 +50,10 @@ class MessagesController < ApplicationController
 
   def index
     redirect_to '/channels'
+  end
+
+  def ajaxRender
+    format.html { render :action=>"show"} 
   end
 
   private
