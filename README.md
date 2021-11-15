@@ -47,6 +47,8 @@ Things you may want to cover:
 * `docker-compose build web`
 * `docker-compose up --detach db`
 * `docker-compose run web rails db:create`
+* `docker-compose run web rails db:migrate`
+* `docker-compose run web rails db:seed`
 * If an error about `RAILS_ENV` not being set in schema pops up, run: `docker-compose run web rails db:environment:set RAILS_ENV=development `
 * `docker-compose run web bundle install`
 * `docker-compose run web yarn install`
