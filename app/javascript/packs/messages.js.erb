@@ -1,0 +1,67 @@
+// Run this example by adding <%%= javascript_pack_tag 'hello_erb' %> to the head of your layout file,
+// like app/views/layouts/application.html.erb. Don't forget to uncomment erb tag after adding it to your layout file.
+
+require("jquery")
+
+window.jQuery = $
+window.$ = $
+
+$(document).ready(function(){
+//	console.log("ready");
+	setInterval(textRender,5000)
+})
+
+function add_child_form(elt_id, channel_id, form_auth_token) {
+      var curr_div = document.getElementById(elt_id);
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", `/channels/${channel_id}/messages`);
+      form.setAttribute("accept-charset", "UTF-8");
+
+      var auth = document.createElement("input");
+      auth.setAttribute("type", "hidden");
+      auth.setAttribute("name", "authenticity_token");
+      auth.setAttribute("value", form_auth_token);
+
+      var parent_id = document.createElement("input");
+      parent_id.setAttribute("type", "hidden");
+      parent_id.setAttribute("name", "message[parent_message_id]");
+      parent_id.setAttribute("value", elt_id);
+
+      var content = document.createElement("input");
+      content.setAttribute("type", "text");
+      content.setAttribute("name", "message[content]");
+      auth.setAttribute("id", 'message_content');
+
+      var submit = document.createElement("input");
+      submit.setAttribute("type", "submit");
+      submit.setAttribute("name", "commit");
+      submit.setAttribute("value", "Send message");
+      submit.setAttribute("class", "btn btn-primary");
+      submit.setAttribute("data-disable-with", "Send message");
+
+      form.appendChild(auth);
+      form.appendChild(content);
+      form.appendChild(submit);
+      form.appendChild(parent_id);
+
+      curr_div.appendChild(form);
+}
+
+function textRender(){
+      var container = $('#messageContainer');
+      //$.ajax("messages/ajaxRender")
+      var presentPath = window.location.pathname
+      //console.log(presentPath)
+      $.ajax({
+            url: presentPath+"/messages/ajaxRender",
+            type: 'GET',
+            success: function(result){                      
+                  jQuery("#messageContainer").html(result);
+            }
+      })
+}
+
+function generateMessage(){
+
+}
