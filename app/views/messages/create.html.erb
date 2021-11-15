@@ -1,8 +1,10 @@
-<h1>Message#create</h1>
-<h2>Debug Params</h2>
-<%= params.inspect%>
-<h2>Debug Message</h2>
-<%= @message.inspect %>
-<h2>Debug User</h2>
-<%= current_user.inspect %>
-<p>Find me in app/views/message/create.html.erb</p>
+<h1>Message Save Error</h1>
+
+<p>follows are the debug info: </p>
+<%= @message.errors.full_messages.inspect %>
+<%= @message.inspect%>
+<%= User.all.inspect%>
+<p>
+Messages fail to save into database
+</p>
+<%= link_to "back to main" '/'%>

@@ -1,20 +1,6 @@
 <h1><%= @channel.name %></h1>
-<%= link_to "back to channels", "/channels/"%>
-<script>
-    console.log("IN script")
-    $('document').ready(startInterval)
-    function startInterval(){
-      console.log("IN start")
-      setInterval(getMessages, 5000);
-    }
-
-    function getMessages(){
-      console.log("IN getMessages")
-      $("[data-behavior='message-items']").html("<%= j (render template: "messages/show") %>")
-    }
-</script>
-
-<div data-behavior="message-items"></div>
+<%= link_to "back to channels", "/"%>
+<%= render template: "messages/show" %>
 <div class="messageBar">
         <%= form_with model: [@channel,@channel.messages.build] do |f| %>
         <%= f.text_field :content %>
