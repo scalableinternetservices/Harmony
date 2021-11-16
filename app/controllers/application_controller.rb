@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :require_login
   helper_method :current_user
-  load Rails.root + "db/seeds.rb"
+  Rails.application.load_seed
   def require_login
     redirect_to new_session_path unless session.include? :user_id
   end
