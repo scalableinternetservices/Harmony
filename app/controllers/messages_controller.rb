@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   def new
     @message = Channel.find_by(id:params[:id]).build
   end
-  
+
   def update
     @message = Message.find_by(id: params[:id])
     if @message.update(message_params)
@@ -23,6 +23,16 @@ class MessagesController < ApplicationController
     end
   end
 
+  # PATCH/PUT /message/1
+  def update
+    @message = Message.find_by(id: params[:id])
+    if @message.update(message_params)
+      redirect_to channel_path(@message.channel), notice: 'Message was successfully updated.'
+    else
+      render :edit
+    end
+  end
+  
   def create
     @channel = Channel.find_by(id:params[:channel_id])
     @message = @channel.messages.build(message_params)
@@ -42,7 +52,6 @@ class MessagesController < ApplicationController
     #   @parrent_user = User.find_by(id: @message.parent_message.id)
     #   Notification.create(recipient: @parrent_user, actor: current_user, action: "replied", notifiable: @channel)
     # end
-
     if @message.save
       redirect_to channel_path(@channel)
     end
@@ -58,6 +67,6 @@ class MessagesController < ApplicationController
 
   private
     def message_params
-      params.require(:message).permit(:content)
+      params.require(:message).permit(:content, :parent_message_id, :user_id, :channel_id)
     end
 end
