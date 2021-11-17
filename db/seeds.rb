@@ -19,8 +19,8 @@ Message.connection.execute('ALTER SEQUENCE messages_id_seq RESTART WITH 1')
 Channel.connection.execute('ALTER SEQUENCE channels_id_seq RESTART WITH 1')
 #change these two var if you need
 #the number too large might need huge number to start up the app
-@channelMaxNum = 3
-@messageMaxNuminChannel = 5
+@channelMaxNum = 20
+@messageMaxNuminChannel = 50
 
 #these are the generate process
 @channelNum = rand(@channelMaxNum)
