@@ -57,5 +57,7 @@ Things you may want to cover:
 
 ### Load testing configuration
 app/db/seeds.rb will generate some random data to help evaluate the server performance
+
 every time server starts it will automatically envoke seeds.rb, so no need to worry about it.
+
 I extract channel Maximum number and message maximum number from the code, so that you can easily change the size of the generated data
