@@ -18,7 +18,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 align-self-end">
       <div class="messageBar">
               <%= form_with model: [@channel,@channel.messages.build] do |f| %>
               <%= f.text_field :content %>
