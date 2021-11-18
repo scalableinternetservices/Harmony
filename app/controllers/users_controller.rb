@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create, :show]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_logout, only: [:new, :create]
+  before_action :check_user, only: [:edit, :update, :destroy]
 
   # GET /users
   def index
@@ -58,5 +60,11 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :password, :firstname, :lastname, :age, :gender, :location)
       # params.fetch(:user, {})
+    end
+
+    def check_user
+      if session[:user_id] != @user.id
+        head :forbidden
+      end
     end
 end

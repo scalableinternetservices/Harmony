@@ -7,7 +7,14 @@ window.jQuery = $
 window.$ = $
 
 $(document).ready(function(){
-	console.log("ready");
+//	console.log("ready");
+      $('button.btn').click(function(){
+            console.log("123")
+            var authenticity = $(this).attr('data-authenticity')
+            var channel_id = $(this).attr('data-channel-id')
+            var message_id = $(this).attr('data-message-id')
+            add_child_form(message_id,channel_id,authenticity)
+      })
 	setInterval(textRender,5000)
 })
 
@@ -52,7 +59,7 @@ function textRender(){
       var container = $('#messageContainer');
       //$.ajax("messages/ajaxRender")
       var presentPath = window.location.pathname
-      console.log(presentPath)
+      //console.log(presentPath)
       $.ajax({
             url: presentPath+"/messages/ajaxRender",
             type: 'GET',

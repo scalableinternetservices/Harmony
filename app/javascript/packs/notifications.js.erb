@@ -1,0 +1,79 @@
+require("jquery")
+
+window.jQuery = $
+window.$ = $
+
+
+$(document).ready(function(){
+	console.log("ready");
+	setInterval(renderNotif,7000)
+})
+
+function renderNotif(){
+  var notifications = $('[data-behavior="notifications"]')
+
+  //$.ajax("messages/ajaxRender")
+  if(notifications.length > 0){
+    var notifications_link = $('[data-behavior="notifications-link"]')
+    console.log("notifications_link", notifications_link)
+
+    $('[data-behavior="notifications"]').click(function(){
+      console.log("HANDLE CLICK")
+      $.ajax({
+        url: "/notifications/mark_as_read",
+        dataType: "JSON",
+        method: "POST",
+        success: function(){
+          $('[data-behavior="unread-count"]').text(0)
+        }
+      })
+    })
+
+    $.ajax({
+          url: "/notifications.json",
+          datatype: "JSON",
+          type: 'GET',
+          success: function(result){
+            console.log("DATA: ", result)
+            items = $.map(result, function(notification){
+              return "<a class='dropdown-item' href='"+ notification.url + "'>" + notification.actor + " " + notification.action + " in " + notification.notifiable.name + "</a><br>"
+            })
+            $("[data-behavior='unread-count']").text(items.length)
+            $("[data-behavior='notification-items']").html(items)
+            console.log("ITEMS", items)
+            console.log("unread-count", items.length)
+          }
+    })
+  }
+
+}
+
+  //  setup(){
+  //   var notificationObject = document.getElementById("notifications");
+  //     notificationObject.addEventListener("click", myScript);
+  //   handleClick()
+  //     $("[data-behavior='notifications-link']").onclick = handleClick()
+  //     $.ajax(
+  //       url: "/notifications.json",
+  //       dataType: "JSON",
+  //       method: "GET",
+  //       success: handleSuccess()
+  //     )
+  //  }
+
+
+  //  handleClick: (e) =>
+  //    $.ajax(
+  //      url: "/notifications/mark_as_read"
+  //      dataType: "JSON"
+  //      method: "POST"
+  //      success: ->
+  //        $("[data-behavior='unread-count']").text(0)
+  //    )
+
+  //  handleSuccess: (data) =>
+  //    items = $.map data, (notification) ->
+  //      "<a class='dropdown-item' href='#{notification.url}'>#{notification.actor} #{notification.action} #{notification.notifiable.type}</a>"
+
+  //    $("[data-behavior='unread-count']").text(items.length)
+  //    $("[data-behavior='notification-items']").html(items)
