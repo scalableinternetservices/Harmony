@@ -1,4 +1,5 @@
 class ChannelsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   skip_before_action :require_login, only: [:show, :index]
   
   def index
