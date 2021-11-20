@@ -1,5 +1,7 @@
+
+<%= javascript_pack_tag 'messages'%>
 <div class="container">
-  <div class="row">
+  <div class="row align-items-start">
     <div class="col-md-10">
       <h1><%= @channel.name %></h1>
       <%= link_to "back to channels", "/"%>
@@ -18,13 +20,13 @@
         <% end %>
       </div>
     </div>
-    <div class="col-md-9 align-self-end">
-      <div class="messageBar">
-              <%= form_with model: [@channel,@channel.messages.build] do |f| %>
-              <%= f.text_field :content %>
-              <%= f.submit "Send message", class: "btn btn-primary"%>
-         <% end %>
-      </div>
+  </div>
+  <div class="col-md-9 align-self-end">
+    <div class="messageBar">
+      <%= form_with model: [@channel,@channel.messages.build] do |f| %>
+        <%= f.text_field :content %>
+        <%= f.submit "Send message", class: "btn btn-primary"%>
+      <% end %>
     </div>
   </div>
 </div>
