@@ -50,4 +50,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'sassc', '~> 2.1.0'
 
 gem 'jbuilder', '~> 2.5'
+#for caching action
 gem 'actionpack-action_caching'
+#for pagination
+gem 'kaminari', '~> 1.2.1'
