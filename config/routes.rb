@@ -13,4 +13,7 @@ Rails.application.routes.draw do
     end
   end
   resources :sessions
+  get "seeding" => "application#seed_page"
+  post "seeding" => "application#seed_with_params"
+  delete "seeding" => "application#clear_db"
 end

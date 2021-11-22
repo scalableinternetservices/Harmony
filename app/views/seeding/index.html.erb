@@ -1,0 +1,22 @@
+<%= form_with(url: '/seeding', method: :post) do |form| %>
+  <div>
+    <%= form.number_field :users %>
+    <%= form.label :users, "Number of users" %>
+    <%= form.number_field :channels %>
+    <%= form.label :channels, "Number of channels" %>
+    <%= form.number_field :messages %>
+    <%= form.label :messages, "Avg. messages per channel" %>
+    <%= form.number_field :replies %>
+    <%= form.label :replies, "Avg. replies per message" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Seed DB" %>
+  </div>
+<% end %>
+
+<%= form_with(url: '/seeding', method: :delete) do |form| %>
+  <div class="actions">
+    <%= form.submit "Reset DB" %>
+  </div>
+<% end %>
