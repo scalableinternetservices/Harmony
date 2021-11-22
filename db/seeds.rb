@@ -26,13 +26,15 @@ Message.connection.execute('ALTER SEQUENCE messages_id_seq RESTART WITH 1')
 Channel.connection.execute('ALTER SEQUENCE channels_id_seq RESTART WITH 1')
 #change these two var if you need
 #the number too large might need huge number to start up the app
-@channelMaxNum = 30
+@channelMaxNum = 100
 @messageMaxNuminChannel = 100
 
 #these are the generate process
 @channelNum = rand(@channelMaxNum)
 @i=0
 until @i>@channelNum do
+	
+  	User.create(username: 'test', firstname: 'guest',password: 'guest', lastname: 'guest', age: 99, gender: 'M', location: 'Goleta')
 	tmp = Channel.new(name:generate_string(5))
 	tmp.save()
 	@messageNum = @messageMaxNuminChannel
