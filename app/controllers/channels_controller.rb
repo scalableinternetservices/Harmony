@@ -13,7 +13,9 @@ class ChannelsController < ApplicationController
   def new
     @channel = Channel.new
   end
-
+  def userindex
+    @allUsers = User.all
+  end
   def create
     @channel = Channel.new(channel_params)
 

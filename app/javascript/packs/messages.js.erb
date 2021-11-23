@@ -6,13 +6,17 @@ require("jquery")
 window.jQuery = $
 window.$ = $
 
-
 $(document).ready(function(){
+
       $('button.btn').click(function(){
             var authenticity = $(this).attr('data-authenticity')
             var channel_id = $(this).attr('data-channel-id')
             var message_id = $(this).attr('data-message-id')
             add_child_form(message_id,channel_id,authenticity)
+      })
+
+      $('#messageContainer').scroll(function(){
+            console.log($(this).scrollTop());
       })
 
       var messageContainer = document.getElementById('messageContainer')

@@ -7,7 +7,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body class="container-fluid">
-    <%= render partial: 'shared/navigation_bar' %>
+    <%= render partial: 'shared/navigation_bar', cached:true%>
     <div class="container-fluid">
       <%= yield %>
     </div>
