@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def set_notifications
+    @notifications = Notification.where(recipient: @current_user).recent
+  end
+
   # get /seeding
   def seed_page
     render "seeding/index.html.erb"
