@@ -1,31 +1,51 @@
 <%= javascript_pack_tag 'messages'%>
+<%= stylesheet_link_tag 'channels' %>
 <div class="container-fluid">
-  <div class = "row">
+  <div class="row">
     <div class="col-sm-10">
       <div class="row">
         <h1><%= @channel.name %></h1>
-        <%= link_to "back to channels", "/"%>
       </div>
       <div class="row">
-        <main class="col-md-9" role="main">
-          <div class="container-fluid" id="messageContainer" style="overflow:auto;height: calc(85vh - 7rem);">
+        <main class="container-fluid" id="messageContainer" role="main" style="overflow:auto;height: calc(85vh - 10rem);">
           <%= render template: "messages/show" %>
-          </div>
         </main>
       </div>
     </div>
-      <div class="col-sm-2 bd-sidebar">
-        <%=render template: "channels/userindex",cached:true %>
-      </div>
+    <div class="col-sm-2">
+      <h1 class="h3 mb-3" style="align-content: left;">User List</h1>
+        <div class="bd-sidebar p-0" style="overflow:y; height: calc(85vh - 10rem);align-items: left;">
+              <% @users=User.all%>
+              <!this is bugs remain fixed>
+              <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <% @users.each do |user| %>
+                      <% if user.username == "guest" %>
+                        <% next %>
+                      <% end %>
+
+                      <a href='/users/<%= user.id %>' class="list-group-item list-group-item-action border-0">
+                        <div class="d-flex align-items-center">
+                          <% if user.image.attached? %>
+                            <%= image_tag(user.image, width:"40", height:"40")%> 
+                          <% end %> 
+                            <strong><%= user.username %></strong>
+                        </div>
+                      </a>
+                    <% end %>
+                    <hr class="d-block d-lg-none mt-1 mb-0">
+                  </ul>
+              </div>
+        </div>
+    </div>
   </div>
   <div class="col-md-9">
     <div class="messageBar">
       <%= form_with model: [@channel,@channel.messages.build] do |f| %>
-        <% cache f do %>
           <%= f.text_field :content %>
           <%= f.submit "Send message", class: "btn btn-primary"%>
-          <%end%>
       <% end %>
     </div>
   </div>
 </div>
+

@@ -5,8 +5,8 @@ class ChannelsController < ApplicationController
     @channels = Channel.order(:name).page params[:page]
   end
   def show
+    @channels = Channel.all
     @channel = Channel.find(params[:id])
-    # @users = User.all
     @users = @channel.users.uniq
   end
 

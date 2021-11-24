@@ -3,6 +3,12 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_logout, only: [:new, :create]
   before_action :check_user, only: [:edit, :update, :destroy]
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> main
   # GET /users
   def index
     @users = User.all
@@ -57,7 +63,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password, :firstname, :lastname, :age, :gender, :location)
+      params.require(:user).permit(:username, :password, :firstname, :lastname, :age, :gender, :location, :image)
       # params.fetch(:user, {})
     end
 
