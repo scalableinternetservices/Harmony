@@ -15,12 +15,29 @@ $(document).ready(function(){
             add_child_form(message_id,channel_id,authenticity)
       })
 
-      $('#messageContainer').scroll(function(){
-            console.log($(this).scrollTop());
-      })
-
       var messageContainer = document.getElementById('messageContainer')
       messageContainer.scrollTop = messageContainer.scrollHeight
+      $('#messageContainer').scroll(function(){
+            if($(this).scrollTop()==0){
+                  params = { "ReverseId": $(this).children("div").length }
+                 $.ajax({
+                        url: window.location.pathname+"/messages/history",
+                        datatype: "JSON",
+                        type: 'GET',
+                        data:params,
+                        success: function(result){
+                        data = result["data"]
+                        historyMessages = $.map(result, function(notification){
+                          return "<a class='dropdown-item' href='"+ notification.url + "'>" + notification.actor + " " + notification.action + " in " + notification.notifiable.name + "</a><br>"
+                        })
+                        messages = $.map(result,generateHtml())
+                        $("messageContainer").prepend()
+                        $("[data-behavior='unread-count']").text(items.length)
+                        $("[data-behavior='notification-items']").html(items)
+                        }
+                  }) 
+            }
+      })
 	setInterval(textRender,5000)
 })
 
@@ -73,4 +90,14 @@ function textRender(){
                   jQuery("#messageContainer").html(result);
             }
       })
+}
+
+function messageRender(message){
+      if(message.parent_message==nil)
+      var b = "<b>"+message.user_id+"</b>"
+      $form = $("<form></form>")
+      var forminput1 = '<input id="message_content" type="text" value="'+message.content+'" name= "message[content]">'
+      var forminput2 = '<input type="submit" name="commit" value="Edit" class="btn btn-primary" data-disable-with="Edit">'
+      $form.append(forminput1)
+      $form.append(forminput2)
 }

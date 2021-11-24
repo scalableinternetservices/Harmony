@@ -18,6 +18,9 @@ class MessagesController < ApplicationController
   def show
     if params.has_key?(:channel_id) then
       @channel = Channel.find_by(id:params[:channel_id])
+      if(params[:id]=="history")
+        history
+      end
     else
       @channel = Channel.find_by(id:params[:id])
     end
@@ -63,6 +66,17 @@ class MessagesController < ApplicationController
 
   def ajaxRender
     format.html { render :action=>"show"} 
+  end
+
+  def history
+    @channel = Channel.find_by(id:params[:channel_id])
+    messageBuffer=[]
+    @channel.messages.limit(20).offset(params[:ReverseId]).reverse.each do |message|
+      item = {:id => messsage.id,:user_id => message.user_id,:repiles=>message.replies, :content=>message.content,
+        :created_at=>message.created_at,:parent_message => messsage.parent_message_id}
+      messageBuffer << item
+    end
+    render json: {success:true, data: messageBuffer}
   end
 
   private

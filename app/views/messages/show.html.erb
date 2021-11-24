@@ -1,6 +1,6 @@
 <% if @channel then%>
     <% if @channel.messages then%>
-            <% @channel.messages.each do |message| %>
+            <% @channel.messages.last(20).each do |message| %>
             <% if message.parent_message_id == nil %>
                     <b><%= message.user_id%>:</b>
                             <%= form_with model: message do |f| %>
@@ -8,7 +8,7 @@
                                 <%= f.submit "Edit", class: "btn btn-primary"%>
                             <% end %>
                 <button type="button" class="btn" data-message-id=<%= message.id %> data-channel-id = <%= @channel.id %> data-authenticity="<%= form_authenticity_token %>">Reply</button>
-        <% end %>
+            <% end %>
             <div id=<%= message.id %> style="color:blue">
                         <% message.replies.each do |reply| %>
                     <div>Reply:</div>

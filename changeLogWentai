@@ -1,0 +1,2 @@
+1. cached action for message ajax render, channel pagination
+2. cache message bar, cache nav bar, extract userList from the channel into a specific segment, and cached the userList
