@@ -6,6 +6,9 @@
       <% @channel.messages.each do |message| %>
         <% if message.parent_message_id == nil %>
           <div class="message">
+            <% if User.find(message.user_id).image.attached? %>
+              <%= image_tag(User.find(message.user_id).image, width:"40", height:"40")%> 
+            <% end %>
             <b><%= User.find(message.user_id).username %>:</b>
             <%= form_with model: message do |f| %>
               <%= f.text_field :content %>
