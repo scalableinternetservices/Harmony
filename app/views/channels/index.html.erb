@@ -1,13 +1,21 @@
-<h1>Channels</h1>
-<ul>
-  <% @channels.each do |channel| %>
-    <li>
-      Channel:
-      <%= link_to channel.name, channel %>   
-      <%= channel.messages.size.inspect%>
-      messages
-    </li>
-  <% end %>
-</ul>
-
-<%= link_to "Add a new Channel", new_channel_path %>
+<%= stylesheet_link_tag 'channels' %>
+<main class="content">
+    <div class="container p-0">
+        <h1 class="h3 mb-3">Channels</h1>
+        <div class="card">
+        <div class="row g-0">
+            <div class="col-12 col-lg-5 col-xl-3 border-right">
+            <% @channels.each do |channel| %>
+              <a href='/channels/<%= channel.id %>' class="list-group-item list-group-item-action border-0">
+                <div class="badge bg-success float-right"><%=channel.messages.size.inspect%></div>
+                <div class="d-flex align-items-start">
+                    <strong><div class="flex-grow-1 ml-3"><%=channel.name%></div></strong>
+                </div>
+              </a>
+            <% end %>
+            <hr class="d-block d-lg-none mt-1 mb-0">
+            <%= link_to "Add a new Channel", new_channel_path %>
+            </div>
+        </div>
+	</div>
+</main>
