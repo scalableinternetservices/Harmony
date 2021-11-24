@@ -1,16 +1,89 @@
-<p id="notice"><%= notice %></p>
-<h1><%= @user.username %></h1>
-<div>
-  <div>First Name: <%= @user.firstname %></div>
-  <div>Last Name: <%= @user.lastname %></div>
-  <div>Age: <%= @user.age %></div>
-  <div>Gender: <%= @user.gender %></div>
-  <div>Location: <%= @user.location %></div>
-</div>
+<%= stylesheet_link_tag 'users' %>
 
-<% if @user.id == session[:user_id] %>
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to "Logout", {:controller=> "sessions", :action=> "destroy"}, :method => :delete %> |
-<%= link_to 'Delete Account', @user, :method => :delete, data: { confirm: 'Are you sure?' } %> |
-<% end %>
-<%= link_to 'Back', users_path %>
+<p id="notice"><%= notice %></p>
+
+<div class="container bootstrap snippets bootdey">
+<div class="panel-body inf-content">
+    <div class="row">
+        <div class="col-md-3">
+            <% if @user.image.attached? %>
+              <%= image_tag(@user.image, style:"width:500px", class:"img-circle img-thumbnail isTooltip") %>
+            <% end %>
+        </div>
+        <div class="col-md-6">
+            <strong>Information</strong><br>
+            <div class="table-responsive">
+            <table class="table table-user-information">
+                <tbody>
+                    <tr>    
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                Name                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%= @user.firstname %> <%= @user.lastname %>   
+                        </td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                Username                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%= @user.username %> 
+                        </td>
+                    </tr>
+
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                Gender                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <%= @user.gender %>
+                        </td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                Location                                               
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                           <%= @user.location %>  
+                        </td>
+                    </tr>
+                    <tr>        
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                Age                                                
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                             <%= @user.age %>
+                        </td>
+                    </tr>                             
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+      <div class="col-md-6">
+                <% if @user.id == session[:user_id] %>
+                <%= link_to 'Edit', edit_user_path(@user) %> |
+                <%= link_to "Logout", {:controller=> "sessions", :action=> "destroy"}, :method => :delete %> |
+                <%= link_to 'Delete Account', @user, :method => :delete, data: { confirm: 'Are you sure?' } %> |
+                <% end %>
+                <%= link_to 'Back', users_path %>  
+      </div>
+    </div>
+    </div>
+</div>
