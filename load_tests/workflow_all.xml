@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers='15000'/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <server host="change.this.to.your.hostname" port="80" type="tcp"></server>
+  </servers>
+
+
+	<load>
+		<arrivalphase phase="1" duration="60" unit="second">
+			<users arrivalrate="2" unit="second"/>
+		</arrivalphase>
+		<arrivalphase phase="2" duration="60" unit="second">
+			<users arrivalrate="4" unit="second"/>
+		</arrivalphase>
+		<arrivalphase phase="3" duration="60" unit="second">
+			<users arrivalrate="8" unit="second"/>
+		</arrivalphase>
+		<arrivalphase phase="4" duration="60" unit="second">
+			<users arrivalrate="16" unit="second"/>
+		</arrivalphase>
+		<arrivalphase phase="5" duration="60" unit="second">
+			<users arrivalrate="32" unit="second"/>
+		</arrivalphase>
+		<arrivalphase phase="6" duration="60" unit="second">
+			<users arrivalrate="64" unit="second"/>
+		</arrivalphase>
+		<arrivalphase phase="7" duration="60" unit="second">
+			<users arrivalrate="128" unit="second"/>
+		</arrivalphase>
+   <arrivalphase phase="8" duration="60" unit="second">
+			<users arrivalrate="256" unit="second"/>
+		</arrivalphase>
+	</load>
+
+  <options>
+    <!-- Set idle connection timeout to 60 seconds -->
+    <option name="idle_timeout" value="60000"/>
+    <!-- Set connection timeout to 60 seconds -->
+    <option name="global_ack_timeout" value="60000"/>
+
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+
+  <sessions>
+    <!-- Sesson1: user registion - edit profile -->
+    <session name="user-registion" probability="10" type="ts_http">
+
+      <setdynvars sourcetype="random_number" start="1000" end="9999999">
+	<var name="random_id"/>
+      </setdynvars>
+
+        <!-- homepage [ GET / ]-->
+        <transaction name="1_homepage">
+          <request>
+            <http
+		url='/'
+		version='1.1'
+		method='GET'>
+	    </http>
+          </request>
+        </transaction>
+        
+        <thinktime value="2" random = "true"></thinktime>
+
+        <!-- registration [ POST /users -->
+	<transaction name="2_user_registration">
+	  <request>
+	    <http
+		url='/users'
+		version='1.1'
+		contents='user%5Busername%5D=tsungtestuser%%_random_id%%&amp;user%5Bpassword%5D=tsungpassword&amp;user%5Bfirstname%5D=tsung&amp;user%5Blastname%5D=tsungtestuser&amp;user%5Bage%5D=22&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Create+User'>
+	    </http>
+	  </request>
+	</transaction>
+	
+        <!-- user list -->
+        <transaction name="3_user_list">
+        <request>
+          <http url='/users' version='1.1' method='GET'></http>
+        </request>
+        </transaction>
+        
+
+        <thinktime value="2" random = "true"></thinktime>
+
+        <!-- view profile -->
+        <transaction name="4_view_profile">
+        <request>
+          <http url='/users/1' version='1.1' method='GET'></http>
+        </request>
+        </transaction>
+
+        <thinktime value="2" random = "true"></thinktime>
+
+        <transaction name="5_edit_profile">
+        <request>
+          <http url='/users/1/edit' version='1.1' method='GET'></http>
+        </request>
+        
+        </transaction>
+
+        <thinktime value="2" random = "true"></thinktime>
+
+        <!-- edit profile -->
+	<transaction name="6_update_age">
+	  <request>
+	    <http
+		url='/users'
+		version='1.1'
+		contents='_method=patch&amp;user%5Busername%5D=tsungtestuser%%_random_id%%&amp;user%5Bpassword%5D=tsungpassword&amp;user%5Bfirstname%5D=tsung&amp;user%5Blastname%5D=testuser&amp;user%5Bage%5D=23&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Update+User'>
+	    </http>
+	  </request>
+	</transaction>	
+
+	
+    </session>
+
+    <!-- Sesson2: unauthorized user -->
+    <session name="a-user-who-only-view" probability="50" type="ts_http">
+
+        <!-- homepage -->
+        <transaction name="1_homepage">
+          <request>
+            <http url='/' version='1.1' method='GET'></http>
+          </request>
+        </transaction>
+
+        <thinktime value="2" random = "true"></thinktime>
+
+        <!-- view posts -->
+        <transaction name="5_view_posts">
+        <request>
+          <http url='/channels/1' version='1.1' method='GET'></http>
+        </request>
+        </transaction>
+
+        <thinktime value="5" random = "true"></thinktime>
+
+    </session>
+
+    <!-- Sesson3: authorized user -->
+    <session name="a-user-who-actively-chat" probability="40" type="ts_http">
+
+        <transaction name="1_homepage">
+          <request>
+            <http url='/' version='1.1' method='GET'></http>
+          </request>
+        </transaction>
+
+        <thinktime value="2" random = "true"></thinktime>
+
+	<transaction name="2_log_in">
+          <request>
+            <http url='/sessions/new' version='1.1' method='GET'></http>
+          </request>
+
+        <thinktime value="2" random = "true"></thinktime>
+
+        <!-- log in -->
+	  <request>
+	    <http
+		url='/sessions'
+		version='1.1'
+		contents='username=tsungtestuser%%_random_id%%&amp;password=tsungpassword&amp;commit=Sign+In%21'>
+	    </http>
+	  </request>
+	</transaction>
+
+	<transaction name="3_create_channel">
+          <request>
+            <http url='/channels/new' version='1.1' method='GET'></http>
+          </request>
+	  
+          <thinktime value="2" random = "true"></thinktime>
+	  
+          <!-- add channel -->
+	  <request>
+	    <http
+		url='/channels'
+		version='1.1'
+		contents='channel%5Bname%5D=tsungchannel%%_random_id%%&amp;commit=Create+Channel'>
+	    </http>
+	  </request>
+	</transaction>
+
+	<!-- todo get channel id to replace 1 in these POST calls -->
+
+        <!-- post -->
+	<transaction name="4_create_post">
+	  <request>
+	    <http
+		url='/channels/1/messages'
+		version='1.1'
+		contents='message%5Bcontent%5D=firstpost%%_random_id%%&amp;commit=Send+message'>
+	    </http>
+	  </request>	  
+
+	</transaction>
+
+	<!-- todo get the right message ID for this upload -->
+
+	<!-- edit -->
+	<transaction name="5_edit_post">
+	  <request>
+	    <http
+		url='/messages/1'
+		version='1.1'
+		contents='_method=patch&amp;message%5Bcontent%5D=firestedit%%_random_id%%&amp;commit=Edit'>
+	    </http>
+	  </request>
+
+	</transaction>
+
+	<!-- todo get the right message ID for this parent -->
+	
+        <!-- reply -->
+	<transaction name="6_reply_post">
+	  <request>
+	    <http
+		url='/channels/1/messages'
+		version='1.1'
+		contents='message%5Bcontent%5D=firstreply%%_random_id%%&amp;message%5Bparent_message_id%5D=1&amp;commit=Send+message'>
+	    </http>
+	  </request>
+
+	</transaction>
+
+
+	<!-- todo get channel id to replace in this GET call -->
+        <transaction name="7_view_posts">
+        <request>
+          <http url='/channels/1' version='1.1' method='GET'></http>
+        </request>
+        </transaction>
+
+        <thinktime value="5" random = "true"></thinktime>
+
+    </session>
+
+  </sessions>
+</tsung>
