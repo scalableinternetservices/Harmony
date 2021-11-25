@@ -1,28 +1,29 @@
 <% if @channel then%>
     <% if @channel.messages then%>
-      <% @channel.messages.each do |message| %>
+      <% @channel.messages.last(20).each do |message| %>
         <% if message.parent_message_id == nil %>
-          <div class="message">
-            <% if User.find(message.user_id).image.attached? %>
-              <%= image_tag(User.find(message.user_id).image, width:"40", height:"40")%> 
+          <% @presentMessager = User.find_by(message.user_id) %>
+          <div class="messageParent" id=<%=message.id%>>
+            <% if @presentMessager.image.attached? %>
+              <%= image_tag(@presentMessager.image, width:"40", height:"40")%> 
             <% end %>
-            <b><%= User.find(message.user_id).username %>:</b>
+            <b><%= @presentMessager.username %>:</b>
             <%= form_with model: message do |f| %>
               <%= f.text_field :content %>
               <%= f.submit "Edit", class: "btn btn-primary"%>
             <% end %>
-          </div>
-          <button type="button" class="btn" data-message-id=<%= message.id %> data-channel-id = <%= @channel.id %> data-authenticity="<%= form_authenticity_token %>">Reply</button>
+            </div>
+            <button type="button" class="btn" data-message-id=<%= message.id %> data-channel-id = <%= @channel.id %> data-authenticity="<%= form_authenticity_token %>">Reply</button>
+            <div class="messageChild" style="color:blue" id=<%= message.id %>>
+              <% message.replies.each do |reply| %>
+                <div><%= User.find(reply.user_id).username %>(reply):</div>
+                <%= form_with model: reply do |f| %>
+                  <%= f.text_field :content %>
+                  <%= f.submit "Edit", class: "btn btn-primary"%>
+                <% end %>
+              <% end %>
+            </div>
         <% end %>
-        <div id=<%= message.id %> style="color:blue">
-          <% message.replies.each do |reply| %>
-            <div><%= User.find(reply.user_id).username %>(reply):</div>
-            <%= form_with model: reply do |f| %>
-              <%= f.text_field :content %>
-              <%= f.submit "Edit", class: "btn btn-primary"%>
-            <% end %>
-          <% end %>
-        </div>
       <% end %>
     <% end %>
 <% else %>
