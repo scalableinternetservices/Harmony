@@ -3,12 +3,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_logout, only: [:new, :create]
   before_action :check_user, only: [:edit, :update, :destroy]
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> main
   # GET /users
   def index
     @users = User.all
