@@ -20,6 +20,8 @@ class MessagesController < ApplicationController
       @channel = Channel.find_by(id:params[:channel_id])
       if(params[:id]=="history")
         history
+      elsif(params[:id]=="ajaxRender")
+        ajaxRender
       end
     else
       @channel = Channel.find_by(id:params[:id])
@@ -65,18 +67,25 @@ class MessagesController < ApplicationController
   end
 
   def ajaxRender
-    format.html { render :action=>"show"} 
+    @channel = Channel.find_by(id:params[:channel_id])
+    messageBuffer=[]
+    @channel.messages.offset(params[:lastId]).where(parent_message_id:nil).each do |message|
+      item = {:id => message.id,:user_id => message.user_id,:replies=>message.replies, :content=>message.content,
+        :created_at=>message.created_at,:parent_message => message.parent_message_id}
+      messageBuffer << item
+    end
+    render json: {success:true,channelId:params[:channel_id],data: messageBuffer,token:form_authenticity_token}
   end
 
   def history
     @channel = Channel.find_by(id:params[:channel_id])
     messageBuffer=[]
-    @channel.messages.limit(20).offset(params[:ReverseId]).reverse.each do |message|
-      item = {:id => messsage.id,:user_id => message.user_id,:repiles=>message.replies, :content=>message.content,
-        :created_at=>message.created_at,:parent_message => messsage.parent_message_id}
+    @channel.messages.where(parent_message_id:nil).order('id DESC').limit(10).offset(params[:parentMessageCount]).each do |message|
+      item = {:id => message.id,:user_id => message.user_id,:replies=>message.replies, :content=>message.content,
+        :created_at=>message.created_at,:parent_message => message.parent_message_id}
       messageBuffer << item
     end
-    render json: {success:true, data: messageBuffer}
+    render json: {success:true,channelId:params[:channel_id],data: messageBuffer,token:form_authenticity_token}
   end
 
   private

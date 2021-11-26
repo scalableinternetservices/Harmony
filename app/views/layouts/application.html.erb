@@ -6,9 +6,9 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="container-fluid">
-    <%= render partial: 'shared/navigation_bar', cached:true%>
-    <div class="container-fluid">
+  <body class="container-fluid ">
+    <%= render partial: 'shared/navigation_bar' %>
+    <div class="container"  style="padding-left: 0;margin-left: 0;">
       <%= yield %>
     </div>
   </body>

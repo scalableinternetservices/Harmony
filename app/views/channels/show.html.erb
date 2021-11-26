@@ -7,14 +7,14 @@
         <h1><%= @channel.name %></h1>
       </div>
       <div class="row">
-        <main class="container-fluid" id="messageContainer" role="main" style="overflow:auto;height: calc(85vh - 10rem);">
+        <ul class="list-group" id="messageContainer" style="overflow:auto;height: calc(85vh - 10rem);">
           <%= render template: "messages/show" %>
-        </main>
+        </ul>
       </div>
     </div>
     <div class="col-sm-2">
       <h1 class="h3 mb-3" style="align-content: left;">User List</h1>
-        <div class="bd-sidebar p-0" style="overflow:y; height: calc(85vh - 10rem);align-items: left;">
+        <div class="bd-sidebar p-0" style="overflow-y:scroll; height: calc(85vh - 10rem);align-items: left;">
               <% @users=User.all%>
               <!this is bugs remain fixed>
               <div class="card">

@@ -8,45 +8,63 @@ window.$ = $
 
 $(document).ready(function(){
 
-      $('button.btn').click(function(){
+      $("button.btn").click(function(){ 
+            console.log('click')
             var authenticity = $(this).attr('data-authenticity')
             var channel_id = $(this).attr('data-channel-id')
             var message_id = $(this).attr('data-message-id')
             add_child_form(message_id,channel_id,authenticity)
       })
 
+      var max = 0
+      //this is a stupid way, but given there are only 20 div, it is acceptable
+      $('ul#messageContainer').children("div").each(function() {
+            max = Math.max(this.id, max);
+      });
+      localStorage['parent-latest-id']=max
+      localStorage['parent-message-count']=10
       var messageContainer = document.getElementById('messageContainer')
       messageContainer.scrollTop = messageContainer.scrollHeight
-      $('#messageContainer').scroll(function(){
+      $('ul#messageContainer').scroll(function(){
             if($(this).scrollTop()==0){
-                  params = { "ReverseId": $(this).children("div").length }
+                  var count = localStorage['parent-message-count']
+                  count = parseInt(count)
+                  params = { "parentMessageCount": count + 1}
                  $.ajax({
                         url: window.location.pathname+"/messages/history",
                         datatype: "JSON",
                         type: 'GET',
                         data:params,
                         success: function(result){
-                        data = result["data"]
-                        historyMessages = $.map(result, function(notification){
-                          return "<a class='dropdown-item' href='"+ notification.url + "'>" + notification.actor + " " + notification.action + " in " + notification.notifiable.name + "</a><br>"
-                        })
-                        messages = $.map(result,generateHtml())
-                        $("messageContainer").prepend()
-                        $("[data-behavior='unread-count']").text(items.length)
-                        $("[data-behavior='notification-items']").html(items)
+                              data = result["data"]
+                              if(data.length>0){
+                                    data=data.reverse()
+                                    var channelId= result["channelId"]
+                                    var token = result["token"]
+                                    //items = data.map(messageRender,{"channelId":channelId,"token":token})
+                                    items = $.map(data,messageRender,{"channelId":channelId,"token":token})
+                                    $("#messageContainer").prepend(items)
+                                    console.log(items)
+                                    messageContainer.scrollTop = messageContainer.scrollHeight/2
+                                    localStorage['parent-message-count']=count+10
+                              }
+                              else{
+                                    alert("there are no more messages!")
+                              }
                         }
-                  }) 
+                  })
             }
       })
 	setInterval(textRender,5000)
 })
 
 function add_child_form(elt_id, channel_id, form_auth_token) {
+
       var curr_div = document.getElementById(elt_id);
       var form = document.createElement("form");
       form.setAttribute("method", "post");
       form.setAttribute("action", `/channels/${channel_id}/messages`);
-      form.setAttribute("accept-charset", "UTF-8");
+      form.setAttribute("accept-charset","UTF-8");
 
       var auth = document.createElement("input");
       auth.setAttribute("type", "hidden");
@@ -74,30 +92,140 @@ function add_child_form(elt_id, channel_id, form_auth_token) {
       form.appendChild(content);
       form.appendChild(submit);
       form.appendChild(parent_id);
-
-      curr_div.appendChild(form);
+      var messageItem = document.createElement("div")
+      messageItem.className="list-group-item"
+      messageItem.appendChild(form)
+      curr_div.after(messageItem);
 }
 
 function textRender(){
       var container = $('#messageContainer');
-      //$.ajax("messages/ajaxRender")
       var presentPath = window.location.pathname
-      //console.log(presentPath)
+      params = {lastId: localStorage['parent-latest-id']}
       $.ajax({
             url: presentPath+"/messages/ajaxRender",
             type: 'GET',
-            success: function(result){                      
-                  jQuery("#messageContainer").html(result);
+            datatype: 'JSON',
+            data: params,
+            success: function(result){
+                  data = result["data"]
+                  if(data.length>0){
+                        var channelId= result["channelId"]
+                        var token = result["token"]
+                        items = data.map(messageRender,{"channelId":channelId,"token":token})
+                        var max = 0
+                        data.each(function(){
+                              max = Math.max(this.id, max);
+                        })
+                        localStorage["parent-latest-id"]=max
+                        localStorage["parent-message-count"]=parseInt(localStorage["parent-message-count"])+data.length
+                        $("#messageContainer").append(items)
+                  }
             }
       })
 }
 
 function messageRender(message){
-      if(message.parent_message==nil)
-      var b = "<b>"+message.user_id+"</b>"
-      $form = $("<form></form>")
-      var forminput1 = '<input id="message_content" type="text" value="'+message.content+'" name= "message[content]">'
-      var forminput2 = '<input type="submit" name="commit" value="Edit" class="btn btn-primary" data-disable-with="Edit">'
-      $form.append(forminput1)
-      $form.append(forminput2)
+      //console.log(message)
+            $div = $("<div></div>")
+            $div.attr('class',"list-group-item")
+            $div.attr('id',message.id)
+            $b = "<b>"+message.user_id+"</b>"
+            $form = $("<form></form>").attr({
+                  method: "post",
+                  action: `/channels/${this.channelId}/messages`,
+                  "accept-charset": "UTF-8"
+            })
+
+            $patching = $('<input>').attr({
+                  type: 'hidden',
+                  name: '_method',
+                  value: 'patch'
+            }).appendTo($form)
+
+            $authenticity = $('<input>').attr({
+                  type: 'hidden',
+                  name: 'authenticity_token',
+                  value: this.token
+            }).appendTo($form)
+
+            $content = $("<input>").attr({
+                  type: 'text',
+                  name: 'message[content]',
+                  id: 'message_content',
+                  value: message.content
+            }).appendTo($form)
+
+            $buttonEdit = $('<input>').attr({
+                  class: "btn btn-primary",
+                  type: "submit",
+                  name: "commit",
+                  value: "Edit",
+                  "data-disable-with": "Edit"
+            }).appendTo($form)
+
+            $buttonReply = $('<button></button>').attr({
+                  class: "btn",
+                  type: "button",
+                  "data-message-id": message.id,
+                  "data-channel-id": this.channelId,
+                  "data-authenticity": this.token,
+            })
+            $buttonReply.text('Reply')
+            $buttonReply.click(function(){ 
+                  add_child_form(message.id,this.channelId,this.token)
+            })
+
+            $buttonReply.appendTo($form)
+
+            $div.append($b)
+            $div.append($form)
+            childItems = $.map(message.replies,childMessageRender)
+            var tmp = []
+            tmp.push($div)
+            tmp = tmp.concat(childItems)
+            return tmp
+}
+
+function childMessageRender(message){
+      $divChild = $("<div></div>")
+      $divChild.attr('class',"list-group-item")
+      $divChild.attr('id',message.id)
+      $divChild.attr('style',"color:blue")
+            $b = "<b>"+message.user_id+"reply</b>"
+            $form = $("<form></form>").attr({
+                  method: "post",
+                  action: `/channels/${this.channelId}/messages`,
+                  "accept-charset": "UTF-8"
+            })
+
+            $patching = $('<input>').attr({
+                  type: 'hidden',
+                  name: '_method',
+                  value: 'patch'
+            }).appendTo($form)
+
+            $authenticity = $('<input>').attr({
+                  type: 'hidden',
+                  name: 'authenticity_token',
+                  value: this.token
+            }).appendTo($form)
+
+            $content = $("<input>").attr({
+                  type: 'text',
+                  name: 'message[content]',
+                  id: 'message_content',
+                  value: message.content
+            }).appendTo($form)
+
+            $buttonEdit = $('<input>').attr({
+                  class: "btn btn-primary",
+                  type: "submit",
+                  name: "commit",
+                  value: "Edit",
+                  "data-disable-with": "Edit"
+            }).appendTo($form)
+      $divChild.append($b)
+      $divChild.append($form)
+      return $divChild
 }
