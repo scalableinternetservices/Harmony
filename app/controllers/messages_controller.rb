@@ -6,22 +6,15 @@ class MessagesController < ApplicationController
     @message = Channel.find_by(id:params[:id]).build
   end
 
-  def update
-    @message = Message.find_by(id: params[:id])
-    if @message.update(message_params)
-      redirect_to channel_path(@message.channel), notice: 'Message was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
   def show
     if params.has_key?(:channel_id) then
       @channel = Channel.find_by(id:params[:channel_id])
       if(params[:id]=="history")
         history
-      elsif(params[:id]=="ajaxRender")
-        ajaxRender
+      elsif(params[:id]=="newMessage")
+        newMessage
+      elsif(params[:id]=="modifiedMessage")
+        modifiedMessage
       end
     else
       @channel = Channel.find_by(id:params[:id])
@@ -32,9 +25,10 @@ class MessagesController < ApplicationController
   def update
     @message = Message.find_by(id: params[:id])
     if @message.update(message_params)
-      redirect_to channel_path(@message.channel), notice: 'Message was successfully updated.'
+      head :created
+      #redirect_to channel_path(@message.channel), notice: 'Message was successfully updated.'
     else
-      render :edit
+      head :bad_request
     end
   end
   
@@ -58,7 +52,9 @@ class MessagesController < ApplicationController
     #   Notification.create(recipient: @parrent_user, actor: current_user, action: "replied", notifiable: @channel)
     # end
     if @message.save
-      redirect_to channel_path(@channel)
+      head :created
+    else
+      head :bad_request
     end
   end
 
@@ -66,24 +62,48 @@ class MessagesController < ApplicationController
     redirect_to '/channels'
   end
 
-  def ajaxRender
+  #This check if messages in history has been edited
+  def modifiedMessage
+    modifiedBuffer=[]
+    @channel = Channel.find_by(id:params[:channel_id])
+    @channel.messages.offset(params[:minId]).where("updated_at>?",params[:lastUpdated].to_time).each do |message|
+      item = {:content=>message.content,:id=>message.id}
+      modifiedBuffer <<item
+    end
+    render json: {data: modifiedBuffer}
+  end
+
+  #type 0 is parent, 1 is children(reply), int compare always faster than string
+  def newMessage
     @channel = Channel.find_by(id:params[:channel_id])
     messageBuffer=[]
-    @channel.messages.offset(params[:lastId]).where(parent_message_id:nil).each do |message|
-      item = {:id => message.id,:user_id => message.user_id,:replies=>message.replies, :content=>message.content,
-        :created_at=>message.created_at,:parent_message => message.parent_message_id}
-      messageBuffer << item
+    @channel.messages.where("id>?",params[:lastId]).each do |message|
+      if message.parent_message_id then
+        item = {:id => message.id,:username=>message.user.username,:content=>message.content,
+          :created_at=>message.created_at,:parentId=>message.parent_message_id,:type=>1}
+        messageBuffer << item
+      else
+        item = {:id => message.id,:username=>message.user.username,:content=>message.content,
+          :created_at=>message.created_at,:type=>0}
+        messageBuffer << item
+      end
     end
     render json: {success:true,channelId:params[:channel_id],data: messageBuffer,token:form_authenticity_token}
   end
+  #type 0 is parent, 1 is children(reply), int compare always faster than string
 
   def history
     @channel = Channel.find_by(id:params[:channel_id])
     messageBuffer=[]
     @channel.messages.where(parent_message_id:nil).order('id DESC').limit(10).offset(params[:parentMessageCount]).each do |message|
-      item = {:id => message.id,:user_id => message.user_id,:replies=>message.replies, :content=>message.content,
-        :created_at=>message.created_at,:parent_message => message.parent_message_id}
+      item = {:id => message.id,:username=>message.user.username,:content=>message.content,
+        :created_at=>message.created_at,:type=>0}
       messageBuffer << item
+      message.replies.each do |reply|
+        item = {:id => reply.id,:username=>reply.user.username,:content=>reply.content,
+        :created_at=>reply.created_at,:type=>1}
+        messageBuffer << item
+      end
     end
     render json: {success:true,channelId:params[:channel_id],data: messageBuffer,token:form_authenticity_token}
   end

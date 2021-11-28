@@ -40,12 +40,10 @@
     </div>
   </div>
   <div class="col-md-9">
-    <div class="messageBar">
-      <%= form_with model: [@channel,@channel.messages.build] do |f| %>
+      <%= form_with model: [@channel,@channel.messages.build], :local=> false,:id=>"messageBar" do |f| %>
           <%= f.text_field :content %>
           <%= f.submit "Send message", class: "btn btn-primary"%>
       <% end %>
-    </div>
   </div>
 </div>
 
