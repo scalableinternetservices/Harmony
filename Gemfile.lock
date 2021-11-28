@@ -27,6 +27,8 @@ GEM
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
+    actionpack-action_caching (1.2.2)
+      actionpack (>= 4.0.0)
     actiontext (6.1.4.1)
       actionpack (= 6.1.4.1)
       activerecord (= 6.1.4.1)
@@ -182,9 +184,13 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+<<<<<<< HEAD
     tzinfo-data (1.2021.5)
       tzinfo (>= 1.0.0)
     web-console (4.1.0)
+=======
+    web-console (4.2.0)
+>>>>>>> 7215ab95e6c7a10fa5acbd7518dd62465b4f75fa
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
@@ -204,6 +210,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  actionpack-action_caching
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   bootstrap-sass (~> 3.4, >= 3.4.1)

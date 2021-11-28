@@ -3,6 +3,7 @@ class User < ApplicationRecord
   
   has_many :messages, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id
+  has_one_attached :image
   validates :username, presence: true
   validates :firstname, presence: true
   validates :lastname, presence: true

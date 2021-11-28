@@ -1,3 +1,5 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
@@ -11,24 +13,88 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.text_field :username %>
-    <%= form.label :username, "Username" %>
-    <%= form.password_field :password %>
-    <%= form.label :password, "Password" %>
-    <%= form.text_field :firstname %>
-    <%= form.label :firstname, "First Name" %>
-    <%= form.text_field :lastname %>
-    <%= form.label :lastname, "Last Name" %>
-    <%= form.number_field :age, in: 18.0..100.0, step: 1.0 %>
-    <%= form.label :age, "Age" %>
-    <%= form.text_field :gender %>
-    <%= form.label :gender, "Gender" %>
-    <%= form.text_field :location %>
-    <%= form.label :location, "Location" %>
+<div class="container">
+		<div class="main-body">
+			<div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Username</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.text_field :username %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Password</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.password_field :password %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">First Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.text_field :firstname %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Last Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.text_field :lastname %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Age</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.number_field :age, in: 18.0..100.0, step: 1.0 %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Gender</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.text_field :gender %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Location</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.text_field :location %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Profile Photo</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= form.file_field :image %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 text-secondary">
+                  <div class="actions">
+                    <%= form.submit %>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+</div>
 <% end %>

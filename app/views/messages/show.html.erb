@@ -1,33 +1,31 @@
-<%= javascript_pack_tag 'messages'%>
 <% if @channel then%>
-<div class="Messaging" id="messageContainer">
-    <div class="showMessage">
-        <% if @channel.messages then%>
-            <% @channel.messages.each do |message| %>
-            <% if message.parent_message_id == nil %>
-            <div class="message">
-                <b><%= message.user_id%>:</b>
-                        <%= form_with model: message do |f| %>
-                            <%= f.text_field :content %>
-                            <%= f.submit "Edit", class: "btn btn-primary"%>
-                        <% end %>
-            </div>
-            <button type="button" class="btn" data-message-id=<%= message.id %> data-channel-id = <%= @channel.id %> data-authenticity="<%= form_authenticity_token %>">Reply</button>
+    <% if @channel.messages then%>
+      <% @channel.messages.each do |message| %>
+        <% if message.parent_message_id == nil %>
+          <div class="message">
+            <% if User.find(message.user_id).image.attached? %>
+              <%= image_tag(User.find(message.user_id).image, width:"40", height:"40")%> 
+            <% end %>
+            <b><%= User.find(message.user_id).username %>:</b>
+            <%= form_with model: message do |f| %>
+              <%= f.text_field :content %>
+              <%= f.submit "Edit", class: "btn btn-primary"%>
+            <% end %>
+          </div>
+          <button type="button" class="btn" data-message-id=<%= message.id %> data-channel-id = <%= @channel.id %> data-authenticity="<%= form_authenticity_token %>">Reply</button>
         <% end %>
         <div id=<%= message.id %> style="color:blue">
-                    <% message.replies.each do |reply| %>
-                <div>Reply:</div>
-                <%= form_with model: reply do |f| %>
-                            <%= f.text_field :content %>
-                            <%= f.submit "Edit", class: "btn btn-primary"%>
-                        <% end %>
+          <% message.replies.each do |reply| %>
+            <div><%= User.find(reply.user_id).username %>(reply):</div>
+            <%= form_with model: reply do |f| %>
+              <%= f.text_field :content %>
+              <%= f.submit "Edit", class: "btn btn-primary"%>
             <% end %>
-            </div>
-            <% end %>
-        <% end %>
-    </div>
-</div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
 <% else %>
-    <p>channel is Nil </p>
-    <%= params.inspect%>
+  <p>channel is Nil </p>
+  <%= params.inspect%>
 <% end %>

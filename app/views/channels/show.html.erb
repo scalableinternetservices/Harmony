@@ -1,22 +1,42 @@
-<div class="container">
-  <div class="row align-items-start">
-    <div class="col-md-10">
-      <h1><%= @channel.name %></h1>
-      <%= link_to "back to channels", "/"%>
-      <%= render template: "messages/show" %>
-    </div>
-    <div class="col-md-2">
-      <h1>user list</h1>
-      <div class="show-user-list">
-        <% @users.each do |user| %>
-          <% if user.username == "guest" %>
-            <% next %>
-          <% end %>
-          <div class="user">
-            <%= user.username%>
-          </div>
-        <% end %>
+<%= stylesheet_link_tag 'channels' %>
+<%= javascript_pack_tag 'messages'%>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10">
+      <div class="row">
+        <h1><%= @channel.name %></h1>
       </div>
+      <div class="row">
+        <main class="container-fluid" id="messageContainer" role="main" style="overflow:auto;height: calc(85vh - 10rem);">
+          <%= render template: "messages/show" %>
+        </main>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <h1 class="h3 mb-3" style="align-content: left;">User List</h1>
+        <div class="bd-sidebar p-0" style="overflow-y:scroll; height: calc(85vh - 10rem);align-items: left;">
+              <% @users=User.all%>
+              <!this is bugs remain fixed>
+              <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <% @users.each do |user| %>
+                      <% if user.username == "guest" %>
+                        <% next %>
+                      <% end %>
+
+                      <a href='/users/<%= user.id %>' class="list-group-item list-group-item-action border-0">
+                        <div class="d-flex align-items-center">
+                          <% if user.image.attached? %>
+                            <%= image_tag(user.image, width:"40", height:"40")%> 
+                          <% end %> 
+                            <strong><%= user.username %></strong>
+                        </div>
+                      </a>
+                    <% end %>
+                    <hr class="d-block d-lg-none mt-1 mb-0">
+                  </ul>
+              </div>
+        </div>
     </div>
   </div>
   <div class="col-md-9 align-self-end">
@@ -28,4 +48,5 @@
     </div>
   </div>
 </div>
-<! render_async channel_path(@channel), interval: 10000 >
+
+
