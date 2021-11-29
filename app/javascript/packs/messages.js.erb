@@ -15,7 +15,6 @@ $(document).ready(function(){
             add_child_form(message_id,channel_id,authenticity)
       })
 
-
       //clean up textfield when press added
       var messageBar = document.querySelector('#messageBar')
       messageBar.addEventListener("ajax:success", () => {
@@ -178,9 +177,8 @@ function messageRender(message){
             if (message.image_attached){
                   var image = new Image(width=40,height=40);
                   image.src = message.image_url;
-                  // image.data.src = message.image_url;
-                  image.className = "card-img-top";
-                  image.loading = "lazy"
+                  image.className = "lazy";
+                  image.loading = "lazy";
                   $div.append(image)
             }
 
