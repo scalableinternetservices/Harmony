@@ -41,8 +41,8 @@ class ApplicationController < ActionController::Base
         render plain: "User creation failed"
       end
     end
-    for _ in 1..num_channels
-      channel = Channel.create(name: generate_string(10, r))
+    for cname in 1..num_channels
+      channel = Channel.create(name: "c_#{cname}")
       if not channel.valid?
         render plain: "Channel creation failed"
       end
