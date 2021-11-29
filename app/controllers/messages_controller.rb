@@ -78,14 +78,20 @@ class MessagesController < ApplicationController
     @channel = Channel.find_by(id:params[:channel_id])
     messageBuffer=[]
     @channel.messages.where("id>?",params[:lastId]).each do |message|
+      attached = 0
+      image = 0
+      if message.user.image.attached? then
+        attached = 1
+        image = url_for(message.user.image)
+      end
       if message.parent_message_id then
-        item = {:id => message.id,:username=>message.user.username,:content=>message.content,
-          :created_at=>message.created_at,:parentId=>message.parent_message_id,:type=>1}
-        messageBuffer << item
+          item = {:id => message.id,:username=>message.user.username,:image_url=>image,:image_attached=>attached,
+            :content=>message.content,:created_at=>message.created_at,:parentId=>message.parent_message_id,:type=>1}
+          messageBuffer << item
       else
-        item = {:id => message.id,:username=>message.user.username,:content=>message.content,
-          :created_at=>message.created_at,:type=>0}
-        messageBuffer << item
+          item = {:id => message.id,:username=>message.user.username, :image_url=>image, :image_attached=>attached, 
+            :content=>message.content,:created_at=>message.created_at,:type=>0}
+          messageBuffer << item
       end
     end
     render json: {success:true,channelId:params[:channel_id],data: messageBuffer,token:form_authenticity_token}
@@ -96,11 +102,24 @@ class MessagesController < ApplicationController
     @channel = Channel.find_by(id:params[:channel_id])
     messageBuffer=[]
     @channel.messages.where(parent_message_id:nil).order('id DESC').limit(10).offset(params[:parentMessageCount]).each do |message|
-      item = {:id => message.id,:username=>message.user.username,:content=>message.content,
+      attached = 0
+      image = 0
+      if message.user.image.attached? then
+        attached = 1
+        image = url_for(message.user.image)
+      end
+      
+      item = {:id => message.id,:username=>message.user.username,:image_url=>image,:image_attached=>attached,:content=>message.content,
         :created_at=>message.created_at,:type=>0}
       messageBuffer << item
       message.replies.each do |reply|
-        item = {:id => reply.id,:username=>reply.user.username,:content=>reply.content,
+        attached = 0
+        image = 0
+        if reply.user.image.attached? then
+          attached = 1
+          image = url_for(reply.user.image)
+        end
+        item = {:id => reply.id,:username=>reply.user.username,:image_url=>image,:image_attached=>attached,:content=>message.content,
         :created_at=>reply.created_at,:type=>1}
         messageBuffer << item
       end
@@ -110,6 +129,6 @@ class MessagesController < ApplicationController
 
   private
     def message_params
-      params.require(:message).permit(:content, :parent_message_id, :user_id, :channel_id)
+      params.require(:message).permit(:content, :parent_message_id, :user_id, :channel_id, :image_url, :image_attached)
     end
 end

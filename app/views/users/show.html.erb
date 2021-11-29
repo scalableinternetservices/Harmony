@@ -8,6 +8,7 @@
         <div class="col-md-3">
             <% if @user.image.attached? %>
               <%= image_tag(@user.image, style:"width:500px", class:"img-circle img-thumbnail isTooltip") %>
+              <%# <%= image_tag(user.image, style:"width:500px", class:"img-circle img-thumbnail isTooltip lazyloading", lazyloading:"on", loading:"lazy") %> %>
             <% end %>
         </div>
         <div class="col-md-6">
@@ -15,7 +16,7 @@
             <div class="table-responsive">
             <table class="table table-user-information">
                 <tbody>
-                    <tr>    
+                    <tr>
                         <td>
                             <strong>
                                 <span class="glyphicon glyphicon-user  text-primary"></span>    

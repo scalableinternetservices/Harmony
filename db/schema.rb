@@ -49,6 +49,13 @@ ActiveRecord::Schema.define(version: 2021_11_23_232110) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "employees", force: :cascade do |t|
+    t.bigint "parent_message_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_message_id"], name: "index_employees_on_parent_message_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
@@ -88,6 +95,7 @@ ActiveRecord::Schema.define(version: 2021_11_23_232110) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "employees", "employees", column: "parent_message_id"
   add_foreign_key "messages", "channels"
   add_foreign_key "messages", "messages", column: "parent_message_id"
   add_foreign_key "messages", "users"

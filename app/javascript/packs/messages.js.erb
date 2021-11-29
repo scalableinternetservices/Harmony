@@ -174,7 +174,18 @@ function messageRender(message){
             $div = $("<div></div>")
             $div.attr('class',"list-group-item")
             $div.attr('id',message.id)
-            $b = "<b>"+message.username + (message.type?"(reply)":"")+"</b>"
+
+            if (message.image_attached){
+                  var image = new Image(width=40,height=40);
+                  image.src = message.image_url;
+                  // image.data.src = message.image_url;
+                  image.className = "card-img-top";
+                  image.loading = "lazy"
+                  $div.append(image)
+            }
+
+            $b = " <b>"+message.username +":" + (message.type?"(reply)":"")+"</b>"
+            
             $form = $("<form></form>").attr({
                   method: "post",
                   action: `/messages/${message.id}`,
