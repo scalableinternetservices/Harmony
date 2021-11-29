@@ -6,8 +6,8 @@ class ChannelsController < ApplicationController
   end
 
   def show
+    @channels = Channel.all
     @channel = Channel.find(params[:id])
-    # @users = User.all
     @users = @channel.users.uniq
   end
 
