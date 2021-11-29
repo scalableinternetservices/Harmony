@@ -184,13 +184,7 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-<<<<<<< HEAD
-    tzinfo-data (1.2021.5)
-      tzinfo (>= 1.0.0)
-    web-console (4.1.0)
-=======
     web-console (4.2.0)
->>>>>>> 7215ab95e6c7a10fa5acbd7518dd62465b4f75fa
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
