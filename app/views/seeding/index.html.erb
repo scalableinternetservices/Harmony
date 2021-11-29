@@ -1,5 +1,7 @@
 <%= form_with(url: '/seeding', method: :post) do |form| %>
   <div>
+    <%= form.number_field :rnd %>
+    <%= form.label :rnd, "Seed for random number generator" %>
     <%= form.number_field :users %>
     <%= form.label :users, "Number of users" %>
     <%= form.number_field :channels %>
