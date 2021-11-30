@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers='15000'/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <server host="insert.your.hostname.here" port="80" type="tcp"></server>
+  </servers>
+  
+  
+  <load>
+    <arrivalphase phase="1" duration="60" unit="second">
+      <users arrivalrate="2" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="2" duration="60" unit="second">
+      <users arrivalrate="4" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="60" unit="second">
+      <users arrivalrate="8" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="60" unit="second">
+      <users arrivalrate="16" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="60" unit="second">
+      <users arrivalrate="32" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="6" duration="60" unit="second">
+      <users arrivalrate="64" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="7" duration="60" unit="second">
+      <users arrivalrate="128" unit="second"/>
+    </arrivalphase>
+    <arrivalphase phase="8" duration="60" unit="second">
+      <users arrivalrate="256" unit="second"/>
+    </arrivalphase>
+  </load>
+  
+  <options>
+    <!-- Set idle connection timeout to 60 seconds -->
+    <option name="idle_timeout" value="60000"/>
+    <!-- Set connection timeout to 60 seconds -->
+    <option name="global_ack_timeout" value="60000"/>
+    
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+  
+  <sessions>
+    
+    <!-- Sesson3: authorized user -->
+    <session name="a-user-who-actively-chat" probability="40" type="ts_http">
+
+      <setdynvars sourcetype="random_number" start="1" end="100">
+	<var name="user_id"/>
+      </setdynvars>
+      <setdynvars sourcetype="random_number" start="1" end="999999">
+	<var name="random_id"/>
+      </setdynvars>
+
+      <!-- registration [ POST /users -->
+      <transaction name="1_user_login">
+	<request subst="true">
+	  <http
+	      url='/users'
+	      version='1.1'
+	      contents='user%5Busername%5D=u_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;commit=Sign+In'>
+	  </http>
+	</request>
+      </transaction>
+      
+      <thinktime value="2" random = "true"></thinktime>
+      	      
+      <transaction name="2_create_channel">
+        <request>
+          <http url='/channels/new' version='1.1' method='GET'></http>
+        </request>
+	
+        <thinktime value="2" random = "true"></thinktime>
+	
+        <!-- add channel -->
+	<request subst="true">
+	  <http
+	      url='/channels'
+	      version='1.1'
+	      contents='channel%5Bname%5D=tsungchannel%%_user_id%%%%_random_id%%&amp;commit=Create+Channel'>
+	  </http>
+	</request>
+      </transaction>
+      
+    </session>
+    
+  </sessions>
+</tsung>
