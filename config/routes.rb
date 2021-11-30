@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   delete 'logout'  => 'sessions#destroy'
   get "history" => 'messages#history'
   resources :messages
-  resources :users
+  resources :users do
+    member do
+      delete 'delete_image/:image_id', action: 'delete_image', as: 'delete_image'
+    end
+  end
+
   resources :channels do
     resources :messages do
     end

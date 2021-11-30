@@ -27,7 +27,7 @@
                       <a href='/users/<%= user.id %>' class="list-group-item list-group-item-action border-0">
                         <div class="d-flex align-items-center">
                           <% if user.image.attached? %>
-                            <%= image_tag(user.image, width:"40", height:"40", class:"lazy", loading:"lazy")%> 
+                            <%= image_tag(user.image.variant(resize: '100x100').processed, width:"40", height:"40", class:"lazy", loading:"lazy")%> 
                           <% end %> 
                             <strong><%= user.username %></strong>
                         </div>

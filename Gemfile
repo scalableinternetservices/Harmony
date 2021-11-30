@@ -24,7 +24,14 @@ gem 'webpacker'
 gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
+gem 'aws-sdk-s3', require: false
+gem 'active_storage_validations'
+
+
+gem 'rmagick', '~> 4.2', '>= 4.2.3'
+gem 'mini_magick', '~> 4.11'
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

@@ -175,7 +175,7 @@ function messageRender(message){
             $div.attr('id',message.id)
 
             if (message.image_attached){
-                  var image = new Image(width=40,height=40);
+                  var image = new Image(40,40);
                   image.src = message.image_url;
                   image.className = "lazy";
                   image.loading = "lazy";

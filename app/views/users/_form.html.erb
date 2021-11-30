@@ -13,82 +13,99 @@
     </div>
   <% end %>
 
-<div class="container">
-		<div class="main-body">
-			<div class="row">
-      <div class="col-lg-8">
-        <div class="card">
-          <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Username</h6>
+  <div class="container">
+      <div class="main-body">
+        <div class="row">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Username</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.text_field :username %>
+                </div>
               </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.text_field :username %>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Password</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.password_field :password %>
+                </div>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Password</h6>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">First Name</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.text_field :firstname %>
+                </div>
               </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.password_field :password %>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Last Name</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.text_field :lastname %>
+                </div>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">First Name</h6>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Age</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.number_field :age, in: 18.0..100.0, step: 1.0 %>
+                </div>
               </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.text_field :firstname %>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Gender</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.text_field :gender %>
+                </div>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Last Name</h6>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Location</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <%= form.text_field :location %>
+                </div>
               </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.text_field :lastname %>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Age</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.number_field :age, in: 18.0..100.0, step: 1.0 %>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Gender</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.text_field :gender %>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Location</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.text_field :location %>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Profile Photo</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <%= form.file_field :image %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3"></div>
-              <div class="col-sm-9 text-secondary">
-                  <div class="actions">
-                    <%= form.submit %>
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Profile Photo</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <% if user.image.attached? && user.image.representable? %>
+                    <%= image_tag user.image.variant(resize: '100x100').processed %>
+                    <div class = "upload-hider-labels">
+                      <%= link_to 'Remove Image', 
+                          delete_image_user_url(image_id: user.image.id),
+                          method: :delete,
+                          data: {confirm: "Are you sure?"},
+                          class: "remove-upload"
+                      %>
+
+                    </div>
+                  <% else %>
+                    <div class="profile-picture no-profile-picture" ></div>
+                  <% end %>
+                  <div class="upload-hider-fields" >
+                    <%= form.file_field :image %>
                   </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9 text-secondary">
+                    <div class="actions">
+                      <%= form.submit %>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
@@ -96,5 +113,4 @@
       </div>
     </div>
   </div>
-</div>
 <% end %>

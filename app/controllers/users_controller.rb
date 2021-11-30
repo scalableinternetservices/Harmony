@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_logout, only: [:new, :create]
   before_action :check_user, only: [:edit, :update, :destroy]
+
   # GET /users
   def index
     @users = User.all
@@ -46,7 +47,18 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
+
     redirect_to users_url, notice: 'User was successfully destroyed.'
+  end
+
+  def delete_image
+    image = ActiveStorage::Attachment.find(params[:image_id])
+    if current_user == image.record || current_user.admin?
+      image.purge
+      redirect_back(fallback_location: request.referer)
+    else
+      redirect_to users_url, notice: 'did not delete image'
+    end
   end
 
   private

@@ -9,3 +9,29 @@
     border-radius:10px;
     box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
 }
+
+.no-profile-picture{
+    background: #CCC;
+}
+
+.upload-hide-labels{
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    width: 100%;
+
+    .replace-upload, .remove-upload{
+        font-size: 11px;
+        text-decoration: underline;
+    }
+
+    .seperator-bar{
+        color: #dcdcdc;
+        margin: 0 18px;
+    }
+}
+
+.upload-hider-fields{
+    height: 100%;
+    width: 100%;
+}
