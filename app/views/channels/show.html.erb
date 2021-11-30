@@ -1,5 +1,5 @@
-<%= stylesheet_link_tag 'channels' %>
 <%= javascript_pack_tag 'messages'%>
+<%= stylesheet_link_tag 'channels' %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-10">
@@ -7,9 +7,9 @@
         <h1><%= @channel.name %></h1>
       </div>
       <div class="row">
-        <main class="container-fluid" id="messageContainer" role="main" style="overflow:auto;height: calc(85vh - 10rem);">
+        <ul class="list-group" id="messageContainer" style="overflow:auto;height: calc(85vh - 10rem);">
           <%= render template: "messages/show" %>
-        </main>
+        </ul>
       </div>
     </div>
     <div class="col-sm-2">
@@ -39,14 +39,11 @@
         </div>
     </div>
   </div>
-  <div class="col-md-9 align-self-end">
-    <div class="messageBar">
-      <%= form_with model: [@channel,@channel.messages.build] do |f| %>
-        <%= f.text_field :content %>
-        <%= f.submit "Send message", class: "btn btn-primary"%>
+  <div class="col-md-9">
+      <%= form_with model: [@channel,@channel.messages.build], :local=> false,:id=>"messageBar" do |f| %>
+          <%= f.text_field :content %>
+          <%= f.submit "Send message", class: "btn btn-primary"%>
       <% end %>
-    </div>
   </div>
 </div>
-
 

@@ -8,4 +8,6 @@ class Channel < ApplicationRecord
       self.users.uniq
     end
   end
+
+  paginates_per 15
 end
