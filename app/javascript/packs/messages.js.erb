@@ -171,43 +171,44 @@ function modifiedMessageRender(){
 }
 
 function messageRender(message){
-            $div = $("<div></div>")
-            $div.attr('class',"list-group-item")
-            $div.attr('id',message.id)
-            $b = "<b>"+message.username + (message.type?"(reply)":"")+"</b>"
-            $form = $("<form></form>").attr({
-                  method: "post",
-                  action: `/messages/${message.id}`,
-                  "accept-charset": "UTF-8",
-                  "data-remote":"true"
-            })
+      $div = $("<div></div>")
+      $div.attr('class',"list-group-item")
+      $div.attr('id',message.id)
+      $b = "<b>"+message.username + (message.type?"(reply)":"")+"</b>"
+      $form = $("<form></form>").attr({
+            method: "post",
+            action: `/messages/${message.id}`,
+            "accept-charset": "UTF-8",
+            "data-remote":"true"
+      })
 
-            $patching = $('<input>').attr({
-                  type: 'hidden',
-                  name: '_method',
-                  value: 'patch'
-            }).appendTo($form)
+      $patching = $('<input>').attr({
+            type: 'hidden',
+            name: '_method',
+            value: 'patch'
+      }).appendTo($form)
 
-            $authenticity = $('<input>').attr({
-                  type: 'hidden',
-                  name: 'authenticity_token',
-                  value: this.token
-            }).appendTo($form)
+      $authenticity = $('<input>').attr({
+            type: 'hidden',
+            name: 'authenticity_token',
+            value: this.token
+      }).appendTo($form)
 
-            $content = $("<input>").attr({
-                  type: 'text',
-                  name: 'message[content]',
-                  id: 'message_content',
-                  value: message.content
-            }).appendTo($form)
+      $content = $("<input>").attr({
+            type: 'text',
+            name: 'message[content]',
+            id: 'message_content',
+            value: message.content
+      }).appendTo($form)
 
-            $buttonEdit = $('<input>').attr({
-                  class: "btn btn-primary",
-                  type: "submit",
-                  name: "commit",
-                  value: "Edit",
-                  "data-disable-with": "Edit"
-            }).appendTo($form)
+      $buttonEdit = $('<input>').attr({
+            class: "btn btn-primary",
+            type: "submit",
+            name: "commit",
+            value: "Edit",
+            "data-disable-with": "Edit"
+      }).appendTo($form)
+
       if(!message.type){
             $buttonReply = $('<button></button>').attr({
                   class: "btn",

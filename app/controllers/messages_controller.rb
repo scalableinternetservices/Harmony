@@ -1,7 +1,6 @@
 class MessagesController < ApplicationController
   skip_before_action :require_login, only: [:create, :new, :show]
   layout false
-  caches_action :ajaxRender
   def new
     @message = Channel.find_by(id:params[:id]).build
   end
