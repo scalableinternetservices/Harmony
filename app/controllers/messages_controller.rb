@@ -68,16 +68,25 @@ class MessagesController < ApplicationController
     @channel = Channel.find_by(id:params[:channel_id])
     @channel.messages.offset(params[:minId]).where("updated_at>?",params[:lastUpdated].to_time).each do |message|
       item = {:content=>message.content,:id=>message.id}
-      modifiedBuffer <<item
+      modifiedBuffer << item
     end
     render json: {data: modifiedBuffer}
   end
 
   #type 0 is parent, 1 is children(reply), int compare always faster than string
   def newMessage
-    @channel = Channel.find_by(id:params[:channel_id])
+    channel_id = params[:channel_id]
+    @channel = Channel.find_by(id:channel_id)
     messageBuffer=[]
-    @channel.messages.where("id>?",params[:lastId]).each do |message|
+    last_id = params[:lastId]
+    if Rails.env.development?
+      new_messages = @channel.messages.where("id>?", last_id)
+    else
+      new_messages = Rails.cache.fetch("messages/#{last_id}/#{channel_id}" , expires_in: 5.seconds) do
+        @channel.messages.where("id>?", last_id)
+      end
+    end
+    new_messages.each do |message|
       if message.parent_message_id then
         item = {:id => message.id,:username=>message.user.username,:content=>message.content,
           :created_at=>message.created_at,:parentId=>message.parent_message_id,:type=>1}
