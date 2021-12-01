@@ -4,6 +4,7 @@ const erb = require('./loaders/erb')
 const webpack = require('webpack')
 
 environment.loaders.prepend('erb', erb)
+environment.loaders.prepend('erb', erb)
 module.exports = environment
 
 environment.plugins.append(
@@ -14,5 +15,6 @@ environment.plugins.append(
     })
 )
 
+environment.loaders.prepend('erb', erb)
 environment.loaders.prepend('erb', erb)
 module.exports = environment
