@@ -1,21 +1,31 @@
-<h1><%= @channel.name %></h1>
-<%= link_to "back to channels", "/"%>
-<%= render template: "messages/show" %>
-<div class="messageBar">
-        <%= form_with model: [@channel,@channel.messages.build] do |f| %>
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col-md-10">
+      <h1><%= @channel.name %></h1>
+      <%= link_to "back to channels", "/"%>
+      <%= render template: "messages/show" %>
+    </div>
+    <div class="col-md-2">
+      <h1>user list</h1>
+      <div class="show-user-list">
+        <% @users.each do |user| %>
+          <% if user.username == "guest" %>
+            <% next %>
+          <% end %>
+          <div class="user">
+            <%= user.username%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9 align-self-end">
+    <div class="messageBar">
+      <%= form_with model: [@channel,@channel.messages.build] do |f| %>
         <%= f.text_field :content %>
         <%= f.submit "Send message", class: "btn btn-primary"%>
-   <% end %>
-</div>
-<h1>user list</h1>
-<div class="show-user-list">
-  <% @users.each do |user| %>
-    <% if user.username == "guest" %>
-      <% next %>
-    <% end %>
-    <div class="user">
-      <%= user.username%>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
 <! render_async channel_path(@channel), interval: 10000 >
