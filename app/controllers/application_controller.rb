@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
     avg_replies_per_message = params[:replies].to_i
     num_users = params[:users].to_i
     rnd_seed = params[:rnd].to_i
+    enable_notif = params.fetch(:notif, false).to_i == 1
 
     r = Random.new(rnd_seed)
 
@@ -52,70 +53,76 @@ class ApplicationController < ActionController::Base
 
     all_channel_list = []
     all_message_list = []
+    all_notification_list = []
     tot_msgs = 0
     for cname in 1..num_channels
-      all_channel_list << {id: cname, name: "c_#{cname}", created_at: seed_time - 1.days, updated_at: seed_time - 1.days}
+      rchannel = {id: cname, name: "c_#{cname}", created_at: seed_time - 1.days, updated_at: seed_time - 1.days}
+      all_channel_list << rchannel
 
       num_messages = r.rand(1..(2 * avg_msg_per_channel))
       # use this if you want to enable notification
       # tot_msgs = 0
+
+      all_channel_users = Set[]
+      all_channel_messages = []
       for _ in 1..num_messages
         msg_time = seed_time + tot_msgs.seconds
         msg_id = tot_msgs + 1
+        ruserid = r.rand(1..(num_users+1))
+        all_channel_users.add(ruserid)
         if r.rand() < 0.5
-          all_message_list << {id: msg_id, content: generate_string(10, r), created_at: msg_time, parent_message_id: nil,
-                               updated_at: msg_time + 100.seconds, channel_id: cname, user_id: r.rand(1..(num_users+1))}
+          rmessage = {id: msg_id, content: generate_string(10, r), created_at: msg_time, parent_message_id: nil,
+                      updated_at: msg_time + 100.seconds, channel_id: cname, user_id: ruserid}
         else
-          all_message_list << {id: msg_id, content: generate_string(10, r), created_at: msg_time, parent_message_id: nil,
-                               updated_at: msg_time, channel_id: cname, user_id: r.rand(1..(num_users+1))}
+          rmessage = {id: msg_id, content: generate_string(10, r), created_at: msg_time, parent_message_id: nil,
+                      updated_at: msg_time, channel_id: cname, user_id: ruserid}
         end
+        all_message_list << rmessage
+        all_channel_messages << rmessage
 
         tot_msgs += 1
         num_replies = r.rand(1..(2 * avg_replies_per_message))
         for _ in 1..num_replies
-          all_message_list << {id: tot_msgs+1, content: generate_string(15, r), created_at: msg_time, updated_at: msg_time,
-                               parent_message_id: msg_id, channel_id: cname, user_id: r.rand(1..(num_users+1))}
+          ruserid = r.rand(1..(num_users+1))
+          all_channel_users.add(ruserid)
+          rmessage = {id: tot_msgs+1, content: generate_string(15, r), created_at: msg_time, updated_at: msg_time,
+                      parent_message_id: msg_id, channel_id: cname, user_id: ruserid}
+          all_message_list << rmessage
+          all_channel_messages << rmessage
           tot_msgs += 1
         end
       end
 
-      # users_notified = []
-      # all_channel_users = channel.users.uniq
-      # for user in all_channel_users
-      #   users_notified << r.rand(1..tot_msgs)
-      # end
+      if not enable_notif
+        next
+      end
+      users_notified = []
+      for _ in all_channel_users
+        users_notified << r.rand(1..all_channel_messages.length)
+      end
 
-      # curr_msg_id = 0
-      # read_at = Time.zone.now
-      # for message in channel.messages
-      #   curr_msg_id += 1
-      #   for user, user_not in all_channel_users.zip(users_notified)
-      #     if user == message.user
-      #       next
-      #     end
-      #     notification = Notification.new(recipient: user, actor: message.user, action: "posted", notifiable: channel)
-      #     if curr_msg_id > user_not
-      #       notification.read_at = read_at
-      #     end
-      #     notification.save()
-      #   end
-      #   for reply in message.replies
-      #     curr_msg_id += 1
-      #     for user, user_not in all_channel_users.zip(users_notified)
-      #       if user == reply.user
-      #         next
-      #       end
-      #       notification = Notification.new(recipient: user, actor: reply.user, action: "posted", notifiable: channel)
-      #       if curr_msg_id > user_not
-      #         notification.read_at = read_at
-      #       end
-      #       notification.save()
-      #     end
-      #   end
-      # end
+      curr_msg_id = 0
+      read_at = Time.zone.now
+      for rmessage in all_channel_messages
+        curr_msg_id += 1
+        for ruserid, user_not in all_channel_users.zip(users_notified)
+          if ruserid == rmessage[:user_id]
+            next
+          end
+          rnotification = {recipient_id: ruserid, actor_id: rmessage[:user_id], action: "posted",
+                           notifiable_id: rchannel[:id], created_at: read_at, updated_at: read_at, read_at: nil}
+          if curr_msg_id > user_not
+            rnotification[:read_at] = read_at
+          end
+          all_notification_list << rnotification
+        end
+      end
     end
     Channel.insert_all!(all_channel_list)
     Message.insert_all!(all_message_list)
+    if all_notification_list.length > 0
+      Notification.insert_all!(all_notification_list)
+    end
   end
 
   # delete /seeding
