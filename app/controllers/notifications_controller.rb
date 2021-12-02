@@ -1,5 +1,4 @@
 class NotificationsController < ApplicationController
-    skip_before_action :verify_authenticity_token
     def index
         @notifications = Notification.where(recipient: current_user).recent
     end
