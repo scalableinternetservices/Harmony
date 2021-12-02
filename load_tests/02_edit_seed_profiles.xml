@@ -31,7 +31,7 @@
   
   <sessions>
     <!-- Sesson1: user registion - edit profile -->
-    <session name="02_edit_seed_profiles" probability="10" type="ts_http">
+    <session name="02_edit_seed_profiles" probability="100" type="ts_http">
       <!-- Generate random variables -->
       <setdynvars sourcetype="random_number" start="1" end="100">
         <var name="user_id"/>
