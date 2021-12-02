@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   helper_method :current_user
   skip_before_action :require_login, only: [:seed_page, :seed_with_params, :clear_db]
-
+  skip_before_action :verify_authenticity_token
+    
   def require_login
     redirect_to new_session_path unless session.include? :user_id
   end
