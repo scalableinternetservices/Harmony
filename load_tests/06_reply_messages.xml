@@ -8,34 +8,13 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="insert.your.hostname.here" port="80" type="tcp"></server>
+    <server host="nooopts.eba-5pz9hpb8.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
   
   
   <load>
-    <arrivalphase phase="1" duration="60" unit="second">
-      <users arrivalrate="2" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="2" duration="60" unit="second">
-      <users arrivalrate="4" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="3" duration="60" unit="second">
-      <users arrivalrate="8" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="60" unit="second">
-      <users arrivalrate="16" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="5" duration="60" unit="second">
-      <users arrivalrate="32" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="6" duration="60" unit="second">
-      <users arrivalrate="64" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="7" duration="60" unit="second">
-      <users arrivalrate="128" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="8" duration="60" unit="second">
-      <users arrivalrate="256" unit="second"/>
+    <arrivalphase phase="1" duration="1" unit="minute">
+      <users arrivalrate="1" unit="minute"/>
     </arrivalphase>
   </load>
   
@@ -53,88 +32,59 @@
   <sessions>
     
     <!-- Sesson3: authorized user -->
-    <session name="a-user-who-actively-chat" probability="100" type="ts_http">
+    <session name="06_create_and_reply_messages" probability="100" type="ts_http">
       <setdynvars sourcetype="random_number" start="1" end="100">
-	<var name="user_id"/>
-      </setdynvars>
-      <setdynvars sourcetype="random_number" start="1" end="20">
-	<var name="channel_id"/>
+        <var name="user_id"/>
       </setdynvars>
       <setdynvars sourcetype="random_number" start="1" end="999999">
-	<var name="random_id"/>
+        <var name="random_id"/>
       </setdynvars>
       <setdynvars sourcetype="random_number" start="1" end="999999">
-	<var name="message_rand"/>
+        <var name="message_rand"/>
       </setdynvars>
       <setdynvars sourcetype="random_number" start="1" end="2000">
-	<var name="message_num"/>
+        <var name="message_num"/>
       </setdynvars>
-      
       <!-- registration [ POST /users -->
       <transaction name="1_user_login">
-	<request subst="true">
-	  <http
-	      method='POST'
-	      url='/users'
-	      version='1.1'
-	      contents='user%5Busername%5D=u_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;commit=Sign+In'>
-	  </http>
-	</request>
+        <request subst="true">
+          <http url='/users' version='1.1' method='POST' contents='user%5Busername%5D=u_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;commit=Sign+In'></http>
+        </request>
       </transaction>
-      
-      <thinktime value="2" random = "true"></thinktime>
-      	      
+      <thinktime value="2" random="true"></thinktime>
       <transaction name="2_create_channel">
         <request>
           <http url='/channels/new' version='1.1' method='GET'></http>
         </request>
-	
-        <thinktime value="2" random = "true"></thinktime>
-	
         <!-- add channel -->
-	<request subst="true">
-	  <http
-	      method='POST'
-	      url='/channels'
-	      version='1.1'
-	      contents='channel%5Bname%5D=tsungchannel%%_user_id%%%%_random_id%%&amp;commit=Create+Channel'>
-	  </http>
-	</request>
-      </transaction>
-
-      <!-- todo get channel id to replace 1 in these POST calls -->
-      
-      <!-- post -->
-      <transaction name="4_create_post">
-	<request subst="true">
-	  <http
-	      method='POST'
-	      url='/channels/%%_channel_id%%/messages'
-	      version='1.1'
-	      contents='message%5Bcontent%5D=newpost%%_random_id%%%%_message_rand%%%%_user_id%%&amp;commit=Send+message'>
-	  </http>
-	</request>	  
-	
-      </transaction>
-      
-            <!-- view posts -->
-      <transaction name="5_view_posts">
         <request subst="true">
-          <http url='/channels/%%_channel_id%%' version='1.1' method='GET'></http>
+          <http url='/channels' version='1.1' method='POST' contents='channel%5Bname%5D=tsungchannel%%_user_id%%%%_random_id%%&amp;commit=Create+Channel'></http>
         </request>
       </transaction>
-      
+      <thinktime value="2" random="true"></thinktime>
+      <!-- post -->
+      <transaction name="4_create_post">
+        <request subst="true">
+          <http url='/channels/1/messages' version='1.1' method='POST' contents='message%5Bcontent%5D=newpost%%_random_id%%%%_message_rand%%%%_user_id%%&amp;commit=Send+message'></http>
+        </request>
+      </transaction>
+      <thinktime value="2" random="true"></thinktime>
+      <transaction name="5_view_posts">
+        <request>
+          <http url='/channels/1' version='1.1' method='GET'></http>
+        </request>
+      </transaction>
+      <thinktime value="2" random="true"></thinktime>      
       <!-- reply -->
       <transaction name="6_reply_post">
-	<request subst="true">
-	  <http
-	      method='POST'
-	      url='/channels/%%_channel_id%%/messages'
-	      version='1.1'
-	      contents='message%5Bcontent%5D=firstreply%%_random_id%%&amp;message%5Bparent_message_id%5D=%%_message_num%%&amp;commit=Send+message'>
-	  </http>
-	</request>
-	
+        <request subst="true">
+          <http
+            url='/channels/%%_message_num%%/messages'
+            version='1.1'
+            method='POST'
+            contents='message%5Bcontent%5D=firstreply%%_random_id%%&amp;message%5Bparent_message_id%5D=1&amp;commit=Send+message'>
+          </http>
+        </request>
       </transaction>
     </session>
     

@@ -8,34 +8,13 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="insert.your.hostname.here" port="80" type="tcp"></server>
+    <server host="nooopts.eba-5pz9hpb8.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
   
   
   <load>
-    <arrivalphase phase="1" duration="60" unit="second">
-      <users arrivalrate="2" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="2" duration="60" unit="second">
-      <users arrivalrate="4" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="3" duration="60" unit="second">
-      <users arrivalrate="8" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="60" unit="second">
-      <users arrivalrate="16" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="5" duration="60" unit="second">
-      <users arrivalrate="32" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="6" duration="60" unit="second">
-      <users arrivalrate="64" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="7" duration="60" unit="second">
-      <users arrivalrate="128" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="8" duration="60" unit="second">
-      <users arrivalrate="256" unit="second"/>
+    <arrivalphase phase="1" duration="1" unit="minute">
+      <users arrivalrate="1" unit="minute"/>
     </arrivalphase>
   </load>
   
@@ -52,74 +31,53 @@
   
   <sessions>
     <!-- Sesson1: user registion - edit profile -->
-    <session name="user-registion" probability="100" type="ts_http">
-      
+    <session name="02_edit_seed_profiles" probability="10" type="ts_http">
+      <!-- Generate random variables -->
       <setdynvars sourcetype="random_number" start="1" end="100">
-	<var name="user_id"/>
+        <var name="user_id"/>
       </setdynvars>
-      
       <!-- homepage [ GET / ]-->
       <transaction name="1_homepage">
         <request>
-          <http
-	      url='/'
-	      version='1.1'
-	      method='GET'>
-	  </http>
+          <http url='/' version='1.1' method='GET'></http>
         </request>
       </transaction>
-      
-      <thinktime value="2" random = "true"></thinktime>
-      
+      <thinktime value="2" random="true"></thinktime>
       <!-- registration [ POST /users -->
       <transaction name="2_user_login">
-	<request subst="true">
-	  <http
-	      url='/users'
-	      version='1.1'
-	      contents='user%5Busername%5D=u_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;commit=Sign+In'>
-	  </http>
-	</request>
+        <request subst="true">
+          <http url='/users' version='1.1' method='POST' contents='user%5Busername%5D=u_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;commit=Sign+In'></http>
+        </request>
       </transaction>
-      
-      <!-- user list -->
+      <thinktime value="2" random="true"></thinktime>
+      <!-- user list [ GET /users ]-->
       <transaction name="3_user_list">
         <request>
           <http url='/users' version='1.1' method='GET'></http>
         </request>
       </transaction>
-      
-      
-      <thinktime value="2" random = "true"></thinktime>
-      
-      <!-- view profile -->
+      <thinktime value="2" random="true"></thinktime>
+      <!-- get profile [ GET /users/%%_user_id%% ]-->
       <transaction name="4_view_profile">
         <request subst="true">
           <http url='/users/%%_user_id%' version='1.1' method='GET'></http>
         </request>
       </transaction>
-      
-      <thinktime value="2" random = "true"></thinktime>
-      
+      <thinktime value="2" random="true"></thinktime>
+      <!-- edit profile [ GET /users/%%_user_id%%/edit ]-->      
+      <!-- edit profile [ POST /users ]-->      
       <transaction name="5_edit_profile">
-	
         <request subst="true">
           <http url='/users/%%_user_id%/edit' version='1.1' method='GET'></http>
         </request>
-        
-      
-      <thinktime value="2" random = "true"></thinktime>
-      
-	<request subst="true">
-	  <http
-	      url='/users'
-	      version='1.1'
-	      contents='_method=patch&amp;user%5Busername%5D=uu_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;user%5Bfirstname%5D=first%%_user_id%%&amp;user%5Blastname%5D=last%%_user_id%%&amp;user%5Bage%5D=33&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Update+User'>
-	  </http>
-	</request>
-      </transaction>	
-      
-      
+        <request subst="true">
+          <http
+            url='/users/%%_user_id%'
+            version='1.1'
+            method='POST'
+            contents='_method=patch&amp;user%5Busername%5D=uu_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;user%5Bfirstname%5D=first%%_user_id%%&amp;user%5Blastname%5D=last%%_user_id%%&amp;user%5Bage%5D=33&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Update+User'></http>
+        </request>
+      </transaction>
     </session>
     
   </sessions>

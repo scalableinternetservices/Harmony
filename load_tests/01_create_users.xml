@@ -8,34 +8,13 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="insert.your.hostname.here" port="80" type="tcp"></server>
+    <server host="nooopts.eba-5pz9hpb8.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
   
   
   <load>
-    <arrivalphase phase="1" duration="60" unit="second">
-      <users arrivalrate="2" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="2" duration="60" unit="second">
-      <users arrivalrate="4" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="3" duration="60" unit="second">
-      <users arrivalrate="8" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="60" unit="second">
-      <users arrivalrate="16" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="5" duration="60" unit="second">
-      <users arrivalrate="32" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="6" duration="60" unit="second">
-      <users arrivalrate="64" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="7" duration="60" unit="second">
-      <users arrivalrate="128" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="8" duration="60" unit="second">
-      <users arrivalrate="256" unit="second"/>
+    <arrivalphase phase="1" duration="1" unit="minute">
+      <users arrivalrate="1" unit="minute"/>
     </arrivalphase>
   </load>
   
@@ -52,46 +31,35 @@
   
   <sessions>
     <!-- Sesson1: user registion - edit profile -->
-    <session name="user-registion" probability="100" type="ts_http">
-      
+    <session name="01_create_users" probability="100" type="ts_http">
+      <!-- Generate random variables -->
       <setdynvars sourcetype="random_number" start="1000" end="9999999">
-	<var name="random_id"/>
+        <var name="random_id"/>
       </setdynvars>
-      
       <!-- homepage [ GET / ]-->
       <transaction name="1_homepage">
         <request>
-          <http
-	      url='/'
-	      version='1.1'
-	      method='GET'>
-	  </http>
+          <http url='/' version='1.1' method='GET'></http>
         </request>
       </transaction>
-      
-      <thinktime value="2" random = "true"></thinktime>
-      
+      <thinktime value="2" random="true"></thinktime>
       <!-- registration [ POST /users -->
       <transaction name="2_user_registration">
-	<request subst="true">
-	  <http
-	      url='/users'
-	      version='1.1'
-	      contents='user%5Busername%5D=tsungtestuser%%_random_id%%&amp;user%5Bpassword%5D=tsungpassword&amp;user%5Bfirstname%5D=tsung&amp;user%5Blastname%5D=tsungtestuser&amp;user%5Bage%5D=22&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Create+User'>
-	  </http>
-	</request>
+        <request subst="true">
+          <http
+            url='/users'
+            version='1.1'
+            method='POST'
+            contents='user%5Busername%5D=tsungtestuser%%_random_id%%&amp;user%5Bpassword%5D=tsungpassword&amp;user%5Bfirstname%5D=tsung&amp;user%5Blastname%5D=tsungtestuser&amp;user%5Bage%5D=22&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Create+User'></http>
+        </request>
       </transaction>
-      
-      <!-- user list -->
+      <thinktime value="2" random="true"></thinktime>
+      <!-- user list [ GET /users ]-->
       <transaction name="3_user_list">
         <request>
           <http url='/users' version='1.1' method='GET'></http>
         </request>
       </transaction>
-      
-      <thinktime value="2" random = "true"></thinktime>
-            
     </session>
-    
   </sessions>
 </tsung>

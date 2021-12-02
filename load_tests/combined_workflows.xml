@@ -203,13 +203,13 @@
       </transaction>
       <thinktime value="2" random="true"></thinktime>
       <!-- post -->
-      <transaction name="4_create_post">
+      <transaction name="3_create_post">
         <request subst="true">
           <http url='/channels/1/messages' version='1.1' method='POST' contents='message%5Bcontent%5D=newpost%%_random_id%%%%_message_rand%%%%_user_id%%&amp;commit=Send+message'></http>
         </request>
       </transaction>
       <thinktime value="2" random="true"></thinktime>
-      <transaction name="5_view_posts">
+      <transaction name="4_view_posts">
         <request>
           <http url='/channels/1' version='1.1' method='GET'></http>
         </request>
@@ -247,20 +247,20 @@
       </transaction>
       <thinktime value="2" random="true"></thinktime>
       <!-- post -->
-      <transaction name="4_create_post">
+      <transaction name="3_create_post">
         <request subst="true">
           <http url='/channels/1/messages' version='1.1' method='POST' contents='message%5Bcontent%5D=newpost%%_random_id%%%%_message_rand%%%%_user_id%%&amp;commit=Send+message'></http>
         </request>
       </transaction>
       <thinktime value="2" random="true"></thinktime>
-      <transaction name="5_view_posts">
+      <transaction name="4_view_posts">
         <request>
           <http url='/channels/1' version='1.1' method='GET'></http>
         </request>
       </transaction>
       <thinktime value="2" random="true"></thinktime>      
       <!-- reply -->
-      <transaction name="6_reply_post">
+      <transaction name="5_reply_post">
       	<request subst="true">
 	        <http
 	          url='/channels/%%_message_num%%/messages'
@@ -303,20 +303,20 @@
       </transaction>
       <thinktime value="2" random="true"></thinktime>
       <!-- post -->
-      <transaction name="4_create_post">
+      <transaction name="3_create_post">
         <request subst="true">
           <http url='/channels/1/messages' version='1.1' method='POST' contents='message%5Bcontent%5D=newpost%%_random_id%%%%_message_rand%%%%_user_id%%&amp;commit=Send+message'></http>
         </request>
       </transaction>
       <thinktime value="2" random="true"></thinktime>
-      <transaction name="5_view_posts">
+      <transaction name="4_view_posts">
         <request>
           <http url='/channels/1' version='1.1' method='GET'></http>
         </request>
       </transaction>
       <thinktime value="2" random="true"></thinktime>      
       <!-- reply -->
-      <transaction name="6_reply_post">
+      <transaction name="5_edit_post">
         <request subst="true">
           <http
             url='/messages/%%_message_num%%'
