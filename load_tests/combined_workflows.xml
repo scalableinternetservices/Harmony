@@ -111,7 +111,7 @@
       <!-- get profile [ GET /users/%%_user_id%% ]-->
       <transaction name="4_view_profile">
         <request subst="true">
-          <http url='/users/%%_user_id%' version='1.1' method='GET'></http>
+          <http url='/users/%%_user_id%%' version='1.1' method='GET'></http>
         </request>
       </transaction>
       <thinktime value="2" random="true"></thinktime>
@@ -119,11 +119,11 @@
       <!-- edit profile [ POST /users ]-->      
       <transaction name="5_edit_profile">
         <request subst="true">
-          <http url='/users/%%_user_id%/edit' version='1.1' method='GET'></http>
+          <http url='/users/%%_user_id%%/edit' version='1.1' method='GET'></http>
         </request>
         <request subst="true">
           <http
-            url='/users/%%_user_id%'
+            url='/users/%%_user_id%%'
             version='1.1'
             method='POST'
             contents='_method=patch&amp;user%5Busername%5D=uu_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;user%5Bfirstname%5D=first%%_user_id%%&amp;user%5Blastname%5D=last%%_user_id%%&amp;user%5Bage%5D=33&amp;user%5Bgender%5D=Male&amp;user%5Blocation%5D=USA&amp;commit=Update+User'></http>
