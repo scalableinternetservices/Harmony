@@ -53,9 +53,12 @@
   <sessions>
     
     <!-- Sesson3: authorized user -->
-    <session name="a-user-who-actively-chat" probability="40" type="ts_http">
+    <session name="a-user-who-actively-chat" probability="100" type="ts_http">
       <setdynvars sourcetype="random_number" start="1" end="100">
 	<var name="user_id"/>
+      </setdynvars>
+      <setdynvars sourcetype="random_number" start="1" end="20">
+	<var name="channel_id"/>
       </setdynvars>
       <setdynvars sourcetype="random_number" start="1" end="999999">
 	<var name="random_id"/>
@@ -68,6 +71,7 @@
       <transaction name="1_user_login">
 	<request subst="true">
 	  <http
+	      method='POST'
 	      url='/users'
 	      version='1.1'
 	      contents='user%5Busername%5D=u_%%_user_id%%&amp;user%5Bpassword%5D=password&amp;commit=Sign+In'>
@@ -87,6 +91,7 @@
         <!-- add channel -->
 	<request subst="true">
 	  <http
+	      method='POST'
 	      url='/channels'
 	      version='1.1'
 	      contents='channel%5Bname%5D=tsungchannel%%_user_id%%%%_random_id%%&amp;commit=Create+Channel'>
@@ -100,7 +105,8 @@
       <transaction name="4_create_post">
 	<request subst="true">
 	  <http
-	      url='/channels/%%_user_id%%%%_random_id%%/messages'
+	      method='POST'
+	      url='/channels/%%_channel_id%%/messages'
 	      version='1.1'
 	      contents='message%5Bcontent%5D=newpost%%_random_id%%%%_message_rand%%%%_user_id%%&amp;commit=Send+message'>
 	  </http>
@@ -111,10 +117,10 @@
       <!-- todo get the right message ID for this parent -->
             <!-- view posts -->
       <transaction name="5_view_posts">
-        <request>
+        <request subst="true">
 	  <dyn_variable name="message_num"
 			re="&lt;div class=&quot;list-group-item&quot; style=&quot;color:blue&quot; id=&quot;(.*)&quot;&gt;&lt;/title&gt;"/>	  
-          <http url='/channels/%%_user_id%%%%_random_id%%' version='1.1' method='GET'></http>
+          <http url='/channels/%%_channel_id%%' version='1.1' method='GET'></http>
         </request>
       </transaction>
       
@@ -122,9 +128,10 @@
       <transaction name="6_reply_post">
 	<request subst="true">
 	  <http
-	      url='/channels/%%_message_num%%/messages'
+	      method='POST'
+	      url='/channels/%%_channel_id%%/messages'
 	      version='1.1'
-	      contents='message%5Bcontent%5D=firstreply%%_random_id%%&amp;message%5Bparent_message_id%5D=1&amp;commit=Send+message'>
+	      contents='message%5Bcontent%5D=firstreply%%_random_id%%&amp;message%5Bparent_message_id%5D=%%_message_num%%&amp;commit=Send+message'>
 	  </http>
 	</request>
 	
