@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
                         created_at: seed_time - 3.days, updated_at: seed_time - 3.days}
     end
     User.insert_all!(all_user_list)
-
+    User.connection.execute("ALTER SEQUENCE users_id_seq RESTART WITH #{all_user_list.length+1}")
     all_channel_list = []
     all_message_list = []
     tot_msgs = 0
@@ -119,6 +119,8 @@ class ApplicationController < ActionController::Base
     end
     Channel.insert_all!(all_channel_list)
     Message.insert_all!(all_message_list)
+    Channel.connection.execute("ALTER SEQUENCE channels_id_seq RESTART WITH #{all_channel_list.length+1}")
+    Message.connection.execute("ALTER SEQUENCE messages_id_seq RESTART WITH #{all_message_list.length+1}")
   end
 
   # delete /seeding
