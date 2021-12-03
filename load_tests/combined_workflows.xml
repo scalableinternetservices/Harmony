@@ -263,7 +263,7 @@
       <transaction name="5_reply_post">
       	<request subst="true">
 	        <http
-	          url='/channels/%%_message_num%%/messages'
+	          url='/channels/1/messages'
 	          version='1.1'
             method='POST'
 	          contents='message%5Bcontent%5D=firstreply%%_random_id%%&amp;message%5Bparent_message_id%5D=1&amp;commit=Send+message'>
